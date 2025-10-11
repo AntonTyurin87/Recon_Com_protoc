@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package gateway;
+
+option go_package = "recon_com.gateway.v1;gateway";
+
+service Gateway {
+  rpc ProcessWithTGBotLibrarian (GatewayRequest) returns (GatewayResponse);
+  rpc ProcessWithLibrarian (GatewayRequest) returns (GatewayResponse);
+  rpc ProcessWithAll (GatewayRequest) returns (GatewayResponse);
+}
+
+message GatewayRequest {
+  string input = 1;
+  string service_choice = 2; // "service1", "service2", "all"
+}
+
+message GatewayResponse {
+  string result = 1;
+  string service_used = 2;
+  string timestamp = 3;
+}

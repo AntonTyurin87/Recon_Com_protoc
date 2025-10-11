@@ -4,7 +4,7 @@
 // - protoc             v6.32.0
 // source: tg_bot_librarian/tg_bot_librarian.proto
 
-package v1
+package tg_bot_lib
 
 import (
 	context "context"
@@ -19,103 +19,103 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	TelegramBotService_SendMessage_FullMethodName = "/recon_com.TelegramBotService/SendMessage"
+	TG_Bot_Librarian_SendMessage_FullMethodName = "/tg_bot_librarian.TG_Bot_Librarian/SendMessage"
 )
 
-// TelegramBotServiceClient is the client API for TelegramBotService service.
+// TG_Bot_LibrarianClient is the client API for TG_Bot_Librarian service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type TelegramBotServiceClient interface {
-	// Отправка сообщения пользователю
+type TG_Bot_LibrarianClient interface {
+	// Отправка текстового сообщения и файла
 	SendMessage(ctx context.Context, in *SendMessageRequest, opts ...grpc.CallOption) (*SendMessageResponse, error)
 }
 
-type telegramBotServiceClient struct {
+type tG_Bot_LibrarianClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewTelegramBotServiceClient(cc grpc.ClientConnInterface) TelegramBotServiceClient {
-	return &telegramBotServiceClient{cc}
+func NewTG_Bot_LibrarianClient(cc grpc.ClientConnInterface) TG_Bot_LibrarianClient {
+	return &tG_Bot_LibrarianClient{cc}
 }
 
-func (c *telegramBotServiceClient) SendMessage(ctx context.Context, in *SendMessageRequest, opts ...grpc.CallOption) (*SendMessageResponse, error) {
+func (c *tG_Bot_LibrarianClient) SendMessage(ctx context.Context, in *SendMessageRequest, opts ...grpc.CallOption) (*SendMessageResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(SendMessageResponse)
-	err := c.cc.Invoke(ctx, TelegramBotService_SendMessage_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, TG_Bot_Librarian_SendMessage_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// TelegramBotServiceServer is the server API for TelegramBotService service.
-// All implementations must embed UnimplementedTelegramBotServiceServer
+// TG_Bot_LibrarianServer is the server API for TG_Bot_Librarian service.
+// All implementations must embed UnimplementedTG_Bot_LibrarianServer
 // for forward compatibility.
-type TelegramBotServiceServer interface {
-	// Отправка сообщения пользователю
+type TG_Bot_LibrarianServer interface {
+	// Отправка текстового сообщения и файла
 	SendMessage(context.Context, *SendMessageRequest) (*SendMessageResponse, error)
-	mustEmbedUnimplementedTelegramBotServiceServer()
+	mustEmbedUnimplementedTG_Bot_LibrarianServer()
 }
 
-// UnimplementedTelegramBotServiceServer must be embedded to have
+// UnimplementedTG_Bot_LibrarianServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedTelegramBotServiceServer struct{}
+type UnimplementedTG_Bot_LibrarianServer struct{}
 
-func (UnimplementedTelegramBotServiceServer) SendMessage(context.Context, *SendMessageRequest) (*SendMessageResponse, error) {
+func (UnimplementedTG_Bot_LibrarianServer) SendMessage(context.Context, *SendMessageRequest) (*SendMessageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendMessage not implemented")
 }
-func (UnimplementedTelegramBotServiceServer) mustEmbedUnimplementedTelegramBotServiceServer() {}
-func (UnimplementedTelegramBotServiceServer) testEmbeddedByValue()                            {}
+func (UnimplementedTG_Bot_LibrarianServer) mustEmbedUnimplementedTG_Bot_LibrarianServer() {}
+func (UnimplementedTG_Bot_LibrarianServer) testEmbeddedByValue()                          {}
 
-// UnsafeTelegramBotServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to TelegramBotServiceServer will
+// UnsafeTG_Bot_LibrarianServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to TG_Bot_LibrarianServer will
 // result in compilation errors.
-type UnsafeTelegramBotServiceServer interface {
-	mustEmbedUnimplementedTelegramBotServiceServer()
+type UnsafeTG_Bot_LibrarianServer interface {
+	mustEmbedUnimplementedTG_Bot_LibrarianServer()
 }
 
-func RegisterTelegramBotServiceServer(s grpc.ServiceRegistrar, srv TelegramBotServiceServer) {
-	// If the following call pancis, it indicates UnimplementedTelegramBotServiceServer was
+func RegisterTG_Bot_LibrarianServer(s grpc.ServiceRegistrar, srv TG_Bot_LibrarianServer) {
+	// If the following call pancis, it indicates UnimplementedTG_Bot_LibrarianServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&TelegramBotService_ServiceDesc, srv)
+	s.RegisterService(&TG_Bot_Librarian_ServiceDesc, srv)
 }
 
-func _TelegramBotService_SendMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _TG_Bot_Librarian_SendMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SendMessageRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TelegramBotServiceServer).SendMessage(ctx, in)
+		return srv.(TG_Bot_LibrarianServer).SendMessage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: TelegramBotService_SendMessage_FullMethodName,
+		FullMethod: TG_Bot_Librarian_SendMessage_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TelegramBotServiceServer).SendMessage(ctx, req.(*SendMessageRequest))
+		return srv.(TG_Bot_LibrarianServer).SendMessage(ctx, req.(*SendMessageRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// TelegramBotService_ServiceDesc is the grpc.ServiceDesc for TelegramBotService service.
+// TG_Bot_Librarian_ServiceDesc is the grpc.ServiceDesc for TG_Bot_Librarian service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var TelegramBotService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "recon_com.TelegramBotService",
-	HandlerType: (*TelegramBotServiceServer)(nil),
+var TG_Bot_Librarian_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "tg_bot_librarian.TG_Bot_Librarian",
+	HandlerType: (*TG_Bot_LibrarianServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "SendMessage",
-			Handler:    _TelegramBotService_SendMessage_Handler,
+			Handler:    _TG_Bot_Librarian_SendMessage_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

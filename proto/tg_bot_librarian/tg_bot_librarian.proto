@@ -1,25 +1,22 @@
 syntax = "proto3";
 
-package recon_com; //TODO переделать
+package tg_bot_librarian;
 
-option go_package = "github.com/your-org/proto-contracts/generated/go/bot/v1"; //TODO переделать
+option go_package = "recon_com.tg_bot_lib.v1;tg_bot_lib";
 
-service TelegramBotService {
-  // Отправка сообщения пользователю
+service TG_Bot_Librarian {
+  // Отправка текстового сообщения и файла
   rpc SendMessage(SendMessageRequest) returns (SendMessageResponse);
 }
 
 message SendMessageRequest {
-  int64 chat_id = 1;    // ID чата получателя
-  string text = 2;      // Текст сообщения
-  string parse_mode = 3; // Режим парсинга (HTML, Markdown)
-  bool silent = 4;      // Тихая отправка (без уведомления)
+  string text = 1;
+  bytes file = 2;
 }
 
 message SendMessageResponse {
   bool success = 1;     // Успешность отправки
-  string message_id = 2; // ID отправленного сообщения
-  string error = 3;     // Описание ошибки (если есть)
+  string error = 2;     // Описание ошибки (если есть)
 }
 
 

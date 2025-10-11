@@ -4,7 +4,7 @@
 // 	protoc        v6.32.0
 // source: tg_bot_librarian/tg_bot_librarian.proto
 
-package v1
+package tg_bot_lib
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -23,10 +23,8 @@ const (
 
 type SendMessageRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ChatId        int64                  `protobuf:"varint,1,opt,name=chat_id,json=chatId,proto3" json:"chat_id,omitempty"`         // ID чата получателя
-	Text          string                 `protobuf:"bytes,2,opt,name=text,proto3" json:"text,omitempty"`                            // Текст сообщения
-	ParseMode     string                 `protobuf:"bytes,3,opt,name=parse_mode,json=parseMode,proto3" json:"parse_mode,omitempty"` // Режим парсинга (HTML, Markdown)
-	Silent        bool                   `protobuf:"varint,4,opt,name=silent,proto3" json:"silent,omitempty"`                       // Тихая отправка (без уведомления)
+	Text          string                 `protobuf:"bytes,1,opt,name=text,proto3" json:"text,omitempty"`
+	File          []byte                 `protobuf:"bytes,2,opt,name=file,proto3" json:"file,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -61,13 +59,6 @@ func (*SendMessageRequest) Descriptor() ([]byte, []int) {
 	return file_tg_bot_librarian_tg_bot_librarian_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *SendMessageRequest) GetChatId() int64 {
-	if x != nil {
-		return x.ChatId
-	}
-	return 0
-}
-
 func (x *SendMessageRequest) GetText() string {
 	if x != nil {
 		return x.Text
@@ -75,25 +66,17 @@ func (x *SendMessageRequest) GetText() string {
 	return ""
 }
 
-func (x *SendMessageRequest) GetParseMode() string {
+func (x *SendMessageRequest) GetFile() []byte {
 	if x != nil {
-		return x.ParseMode
+		return x.File
 	}
-	return ""
-}
-
-func (x *SendMessageRequest) GetSilent() bool {
-	if x != nil {
-		return x.Silent
-	}
-	return false
+	return nil
 }
 
 type SendMessageResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`                     // Успешность отправки
-	MessageId     string                 `protobuf:"bytes,2,opt,name=message_id,json=messageId,proto3" json:"message_id,omitempty"` // ID отправленного сообщения
-	Error         string                 `protobuf:"bytes,3,opt,name=error,proto3" json:"error,omitempty"`                          // Описание ошибки (если есть)
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"` // Успешность отправки
+	Error         string                 `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`      // Описание ошибки (если есть)
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -135,13 +118,6 @@ func (x *SendMessageResponse) GetSuccess() bool {
 	return false
 }
 
-func (x *SendMessageResponse) GetMessageId() string {
-	if x != nil {
-		return x.MessageId
-	}
-	return ""
-}
-
 func (x *SendMessageResponse) GetError() string {
 	if x != nil {
 		return x.Error
@@ -153,20 +129,15 @@ var File_tg_bot_librarian_tg_bot_librarian_proto protoreflect.FileDescriptor
 
 const file_tg_bot_librarian_tg_bot_librarian_proto_rawDesc = "" +
 	"\n" +
-	"'tg_bot_librarian/tg_bot_librarian.proto\x12\trecon_com\"x\n" +
-	"\x12SendMessageRequest\x12\x17\n" +
-	"\achat_id\x18\x01 \x01(\x03R\x06chatId\x12\x12\n" +
-	"\x04text\x18\x02 \x01(\tR\x04text\x12\x1d\n" +
-	"\n" +
-	"parse_mode\x18\x03 \x01(\tR\tparseMode\x12\x16\n" +
-	"\x06silent\x18\x04 \x01(\bR\x06silent\"d\n" +
+	"'tg_bot_librarian/tg_bot_librarian.proto\x12\x10tg_bot_librarian\"<\n" +
+	"\x12SendMessageRequest\x12\x12\n" +
+	"\x04text\x18\x01 \x01(\tR\x04text\x12\x12\n" +
+	"\x04file\x18\x02 \x01(\fR\x04file\"E\n" +
 	"\x13SendMessageResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x1d\n" +
-	"\n" +
-	"message_id\x18\x02 \x01(\tR\tmessageId\x12\x14\n" +
-	"\x05error\x18\x03 \x01(\tR\x05error2b\n" +
-	"\x12TelegramBotService\x12L\n" +
-	"\vSendMessage\x12\x1d.recon_com.SendMessageRequest\x1a\x1e.recon_com.SendMessageResponseB9Z7github.com/your-org/proto-contracts/generated/go/bot/v1b\x06proto3"
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x14\n" +
+	"\x05error\x18\x02 \x01(\tR\x05error2n\n" +
+	"\x10TG_Bot_Librarian\x12Z\n" +
+	"\vSendMessage\x12$.tg_bot_librarian.SendMessageRequest\x1a%.tg_bot_librarian.SendMessageResponseB$Z\"recon_com.tg_bot_lib.v1;tg_bot_libb\x06proto3"
 
 var (
 	file_tg_bot_librarian_tg_bot_librarian_proto_rawDescOnce sync.Once
@@ -182,12 +153,12 @@ func file_tg_bot_librarian_tg_bot_librarian_proto_rawDescGZIP() []byte {
 
 var file_tg_bot_librarian_tg_bot_librarian_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_tg_bot_librarian_tg_bot_librarian_proto_goTypes = []any{
-	(*SendMessageRequest)(nil),  // 0: recon_com.SendMessageRequest
-	(*SendMessageResponse)(nil), // 1: recon_com.SendMessageResponse
+	(*SendMessageRequest)(nil),  // 0: tg_bot_librarian.SendMessageRequest
+	(*SendMessageResponse)(nil), // 1: tg_bot_librarian.SendMessageResponse
 }
 var file_tg_bot_librarian_tg_bot_librarian_proto_depIdxs = []int32{
-	0, // 0: recon_com.TelegramBotService.SendMessage:input_type -> recon_com.SendMessageRequest
-	1, // 1: recon_com.TelegramBotService.SendMessage:output_type -> recon_com.SendMessageResponse
+	0, // 0: tg_bot_librarian.TG_Bot_Librarian.SendMessage:input_type -> tg_bot_librarian.SendMessageRequest
+	1, // 1: tg_bot_librarian.TG_Bot_Librarian.SendMessage:output_type -> tg_bot_librarian.SendMessageResponse
 	1, // [1:2] is the sub-list for method output_type
 	0, // [0:1] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
