@@ -4,7 +4,7 @@
 // 	protoc        v6.32.0
 // source: librarian/librarian.proto
 
-package v1
+package lib
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -115,13 +115,13 @@ var File_librarian_librarian_proto protoreflect.FileDescriptor
 
 const file_librarian_librarian_proto_rawDesc = "" +
 	"\n" +
-	"\x19librarian/librarian.proto\x12\trecon_com\"%\n" +
+	"\x19librarian/librarian.proto\x12\tlibrarian\"%\n" +
 	"\x0fSendFileRequest\x12\x12\n" +
 	"\x04text\x18\x01 \x01(\tR\x04text\"&\n" +
 	"\x10SendFileResponse\x12\x12\n" +
 	"\x04file\x18\x01 \x01(\fR\x04file2P\n" +
 	"\tLibrarian\x12C\n" +
-	"\bSendFile\x12\x1a.recon_com.SendFileRequest\x1a\x1b.recon_com.SendFileResponseB9Z7github.com/your-org/proto-contracts/generated/go/bot/v1b\x06proto3"
+	"\bSendFile\x12\x1a.librarian.SendFileRequest\x1a\x1b.librarian.SendFileResponseB\x16Z\x14recon_com.lib.v1;libb\x06proto3"
 
 var (
 	file_librarian_librarian_proto_rawDescOnce sync.Once
@@ -137,12 +137,12 @@ func file_librarian_librarian_proto_rawDescGZIP() []byte {
 
 var file_librarian_librarian_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_librarian_librarian_proto_goTypes = []any{
-	(*SendFileRequest)(nil),  // 0: recon_com.SendFileRequest
-	(*SendFileResponse)(nil), // 1: recon_com.SendFileResponse
+	(*SendFileRequest)(nil),  // 0: librarian.SendFileRequest
+	(*SendFileResponse)(nil), // 1: librarian.SendFileResponse
 }
 var file_librarian_librarian_proto_depIdxs = []int32{
-	0, // 0: recon_com.Librarian.SendFile:input_type -> recon_com.SendFileRequest
-	1, // 1: recon_com.Librarian.SendFile:output_type -> recon_com.SendFileResponse
+	0, // 0: librarian.Librarian.SendFile:input_type -> librarian.SendFileRequest
+	1, // 1: librarian.Librarian.SendFile:output_type -> librarian.SendFileResponse
 	1, // [1:2] is the sub-list for method output_type
 	0, // [0:1] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name

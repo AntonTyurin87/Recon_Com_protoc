@@ -4,7 +4,7 @@
 // - protoc             v6.32.0
 // source: librarian/librarian.proto
 
-package v1
+package lib
 
 import (
 	context "context"
@@ -19,7 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Librarian_SendFile_FullMethodName = "/recon_com.Librarian/SendFile"
+	Librarian_SendFile_FullMethodName = "/librarian.Librarian/SendFile"
 )
 
 // LibrarianClient is the client API for Librarian service.
@@ -110,7 +110,7 @@ func _Librarian_SendFile_Handler(srv interface{}, ctx context.Context, dec func(
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Librarian_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "recon_com.Librarian",
+	ServiceName: "librarian.Librarian",
 	HandlerType: (*LibrarianServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
