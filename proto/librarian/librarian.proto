@@ -1,8 +1,6 @@
 syntax = "proto3";
 
-package librarian;
 
-option go_package = "recon_com.lib.v1;lib";
 
 service Librarian {
   // Отправка файла в ответ на запрос
