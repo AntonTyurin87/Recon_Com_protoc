@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package tg_bot_librarian;
+package tg_bot_lib;
 
 option go_package = "recon_com.tg_bot_lib.v1;tg_bot_lib";
 
