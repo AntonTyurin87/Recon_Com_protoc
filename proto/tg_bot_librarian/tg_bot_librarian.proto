@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package recon_com; //TODO переделать
+
+option go_package = "github.com/your-org/proto-contracts/generated/go/bot/v1"; //TODO переделать
+
+service TelegramBotService {
+  // Отправка сообщения пользователю
+  rpc SendMessage(SendMessageRequest) returns (SendMessageResponse);
+}
+
+message SendMessageRequest {
+  int64 chat_id = 1;    // ID чата получателя
+  string text = 2;      // Текст сообщения
+  string parse_mode = 3; // Режим парсинга (HTML, Markdown)
+  bool silent = 4;      // Тихая отправка (без уведомления)
+}
+
+message SendMessageResponse {
+  bool success = 1;     // Успешность отправки
+  string message_id = 2; // ID отправленного сообщения
+  string error = 3;     // Описание ошибки (если есть)
+}
+
+

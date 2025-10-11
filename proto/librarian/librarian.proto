@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package recon_com; //TODO переделать
+
+option go_package = "github.com/your-org/proto-contracts/generated/go/bot/v1"; //TODO переделать
+
+service Librarian {
+  // Отправка файла в ответ на запрос
+  rpc SendFile(SendFileRequest) returns (SendFileResponse);
+}
+
+message SendFileRequest {
+  // Текст сообщения
+  string text = 1;
+}
+
+message SendFileResponse {
+  //файл
+  bytes file = 1;
+}
