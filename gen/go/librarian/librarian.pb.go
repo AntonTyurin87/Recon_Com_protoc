@@ -60,7 +60,7 @@ func (*GetRegionsRequest) Descriptor() ([]byte, []int) {
 
 type GetRegionsResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Region        []string               `protobuf:"bytes,1,rep,name=Region,proto3" json:"Region,omitempty"`
+	Region        []*Region              `protobuf:"bytes,1,rep,name=region,proto3" json:"region,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -95,7 +95,7 @@ func (*GetRegionsResponse) Descriptor() ([]byte, []int) {
 	return file_librarian_librarian_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *GetRegionsResponse) GetRegion() []string {
+func (x *GetRegionsResponse) GetRegion() []*Region {
 	if x != nil {
 		return x.Region
 	}
@@ -258,9 +258,9 @@ var File_librarian_librarian_proto protoreflect.FileDescriptor
 const file_librarian_librarian_proto_rawDesc = "" +
 	"\n" +
 	"\x19librarian/librarian.proto\x12\tlibrarian\"\x13\n" +
-	"\x11GetRegionsRequest\",\n" +
-	"\x12GetRegionsResponse\x12\x16\n" +
-	"\x06Region\x18\x01 \x03(\tR\x06Region\"S\n" +
+	"\x11GetRegionsRequest\"?\n" +
+	"\x12GetRegionsResponse\x12)\n" +
+	"\x06region\x18\x01 \x03(\v2\x11.librarian.RegionR\x06region\"S\n" +
 	"\x06Region\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
 	"\aname_ru\x18\x02 \x01(\tR\x06nameRu\x12 \n" +
@@ -295,15 +295,16 @@ var file_librarian_librarian_proto_goTypes = []any{
 	(*SendFileResponse)(nil),   // 4: librarian.SendFileResponse
 }
 var file_librarian_librarian_proto_depIdxs = []int32{
-	3, // 0: librarian.Librarian.SendFile:input_type -> librarian.SendFileRequest
-	0, // 1: librarian.Librarian.GetRegions:input_type -> librarian.GetRegionsRequest
-	4, // 2: librarian.Librarian.SendFile:output_type -> librarian.SendFileResponse
-	1, // 3: librarian.Librarian.GetRegions:output_type -> librarian.GetRegionsResponse
-	2, // [2:4] is the sub-list for method output_type
-	0, // [0:2] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	2, // 0: librarian.GetRegionsResponse.region:type_name -> librarian.Region
+	3, // 1: librarian.Librarian.SendFile:input_type -> librarian.SendFileRequest
+	0, // 2: librarian.Librarian.GetRegions:input_type -> librarian.GetRegionsRequest
+	4, // 3: librarian.Librarian.SendFile:output_type -> librarian.SendFileResponse
+	1, // 4: librarian.Librarian.GetRegions:output_type -> librarian.GetRegionsResponse
+	3, // [3:5] is the sub-list for method output_type
+	1, // [1:3] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_librarian_librarian_proto_init() }
