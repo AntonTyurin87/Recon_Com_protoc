@@ -19,7 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Librarian_SendFile_FullMethodName = "/librarian.Librarian/SendFile"
+	Librarian_SendFile_FullMethodName   = "/librarian.Librarian/SendFile"
+	Librarian_GetRegions_FullMethodName = "/librarian.Librarian/GetRegions"
 )
 
 // LibrarianClient is the client API for Librarian service.
@@ -28,6 +29,8 @@ const (
 type LibrarianClient interface {
 	// Отправка файла в ответ на запрос
 	SendFile(ctx context.Context, in *SendFileRequest, opts ...grpc.CallOption) (*SendFileResponse, error)
+	// Отправить список регионов
+	GetRegions(ctx context.Context, in *GetRegionsRequest, opts ...grpc.CallOption) (*GetRegionsResponse, error)
 }
 
 type librarianClient struct {
@@ -48,12 +51,24 @@ func (c *librarianClient) SendFile(ctx context.Context, in *SendFileRequest, opt
 	return out, nil
 }
 
+func (c *librarianClient) GetRegions(ctx context.Context, in *GetRegionsRequest, opts ...grpc.CallOption) (*GetRegionsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetRegionsResponse)
+	err := c.cc.Invoke(ctx, Librarian_GetRegions_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LibrarianServer is the server API for Librarian service.
 // All implementations must embed UnimplementedLibrarianServer
 // for forward compatibility.
 type LibrarianServer interface {
 	// Отправка файла в ответ на запрос
 	SendFile(context.Context, *SendFileRequest) (*SendFileResponse, error)
+	// Отправить список регионов
+	GetRegions(context.Context, *GetRegionsRequest) (*GetRegionsResponse, error)
 	mustEmbedUnimplementedLibrarianServer()
 }
 
@@ -66,6 +81,9 @@ type UnimplementedLibrarianServer struct{}
 
 func (UnimplementedLibrarianServer) SendFile(context.Context, *SendFileRequest) (*SendFileResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendFile not implemented")
+}
+func (UnimplementedLibrarianServer) GetRegions(context.Context, *GetRegionsRequest) (*GetRegionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRegions not implemented")
 }
 func (UnimplementedLibrarianServer) mustEmbedUnimplementedLibrarianServer() {}
 func (UnimplementedLibrarianServer) testEmbeddedByValue()                   {}
@@ -106,6 +124,24 @@ func _Librarian_SendFile_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Librarian_GetRegions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRegionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LibrarianServer).GetRegions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Librarian_GetRegions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LibrarianServer).GetRegions(ctx, req.(*GetRegionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Librarian_ServiceDesc is the grpc.ServiceDesc for Librarian service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -116,6 +152,10 @@ var Librarian_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SendFile",
 			Handler:    _Librarian_SendFile_Handler,
+		},
+		{
+			MethodName: "GetRegions",
+			Handler:    _Librarian_GetRegions_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -9,3 +9,56 @@ tasks:
     desc: "Generate code from proto files"
     cmds:
       - protoc -I proto proto/librarian/*.proto --go_out=./gen/go/ --go_opt=paths=source_relative --go-grpc_out=./gen/go/ --go-grpc_opt=paths=source_relative
+
+
+  tag-next:
+    desc: Создать следующий тег (patch версия)
+    interactive: true
+    cmds:
+      - |
+        set -e
+        echo "📦 Подготовка к созданию нового тега..."
+        
+        # Получаем последний тег или используем v0.0.0 если тегов нет
+        if LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null); then
+          echo "✅ Последний тег: $LAST_TAG"
+        else
+          LAST_TAG="v0.0.0"
+          echo "ℹ️ Тегов еще нет, начинаем с $LAST_TAG"
+        fi
+        
+        # Убираем префикс 'v' если есть
+        LAST_TAG=${LAST_TAG#v}
+        
+        # Разбиваем версию на части
+        IFS='.' read -r MAJOR MINOR PATCH <<< "$LAST_TAG" || true
+        
+        # Устанавливаем значения по умолчанию если что-то пошло не так
+        MAJOR=${MAJOR:-0}
+        MINOR=${MINOR:-0}
+        PATCH=${PATCH:-0}
+        
+        # Инкрементируем patch версию
+        PATCH=$((PATCH + 1))
+        NEXT_TAG="v${MAJOR}.${MINOR}.${PATCH}"
+        
+        echo ""
+        echo "📊 Информация о теге:"
+        echo "   Последний тег: v${MAJOR}.${MINOR}.$((PATCH - 1))"
+        echo "   Следующий тег: $NEXT_TAG"
+        echo "   Текущий коммит: $(git rev-parse --short HEAD)"
+        echo ""
+        
+        # Спрашиваем подтверждение
+        read -p "🚀 Создать тег $NEXT_TAG? (y/N): " CONFIRM
+        
+        if [[ "$CONFIRM" == "y" || "$CONFIRM" == "Y" ]]; then
+          git tag -a "$NEXT_TAG" -m "Release $NEXT_TAG"
+          echo "✅ Тег $NEXT_TAG успешно создан!"
+          echo ""
+          echo "Для отправки тега выполните:"
+          echo "  git push origin $NEXT_TAG"
+          echo "Или используйте: task tag-push"
+        else
+          echo "❌ Создание тега отменено"
+        fi
