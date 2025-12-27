@@ -24,7 +24,7 @@ const (
 // Получить ссылку для скачивания файла
 type GetURLForDownloadRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	SourceId      string                 `protobuf:"bytes,1,opt,name=source_id,json=sourceId,proto3" json:"source_id,omitempty"`
+	SourceId      int32                  `protobuf:"varint,1,opt,name=source_id,json=sourceId,proto3" json:"source_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -59,11 +59,11 @@ func (*GetURLForDownloadRequest) Descriptor() ([]byte, []int) {
 	return file_librarian_librarian_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *GetURLForDownloadRequest) GetSourceId() string {
+func (x *GetURLForDownloadRequest) GetSourceId() int32 {
 	if x != nil {
 		return x.SourceId
 	}
-	return ""
+	return 0
 }
 
 type GetURLForDownloadResponse struct {
@@ -348,7 +348,7 @@ const file_librarian_librarian_proto_rawDesc = "" +
 	"\n" +
 	"\x19librarian/librarian.proto\x12\tlibrarian\"7\n" +
 	"\x18GetURLForDownloadRequest\x12\x1b\n" +
-	"\tsource_id\x18\x01 \x01(\tR\bsourceId\"=\n" +
+	"\tsource_id\x18\x01 \x01(\x05R\bsourceId\"=\n" +
 	"\x19GetURLForDownloadResponse\x12 \n" +
 	"\vdownloadURL\x18\x01 \x01(\tR\vdownloadURL\"\x16\n" +
 	"\x14GetAllRegionsRequest\"B\n" +
