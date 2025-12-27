@@ -19,8 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Librarian_SendFile_FullMethodName      = "/librarian.Librarian/SendFile"
-	Librarian_GetAllRegions_FullMethodName = "/librarian.Librarian/GetAllRegions"
+	Librarian_SendFile_FullMethodName          = "/librarian.Librarian/SendFile"
+	Librarian_GetAllRegions_FullMethodName     = "/librarian.Librarian/GetAllRegions"
+	Librarian_GetURLForDownload_FullMethodName = "/librarian.Librarian/GetURLForDownload"
 )
 
 // LibrarianClient is the client API for Librarian service.
@@ -29,8 +30,10 @@ const (
 type LibrarianClient interface {
 	// Отправка файла в ответ на запрос
 	SendFile(ctx context.Context, in *SendFileRequest, opts ...grpc.CallOption) (*SendFileResponse, error)
-	// Отправить список регионов
+	// Получить список регионов
 	GetAllRegions(ctx context.Context, in *GetAllRegionsRequest, opts ...grpc.CallOption) (*GetAllRegionsResponse, error)
+	// Получить ссылку для скачивания файла
+	GetURLForDownload(ctx context.Context, in *GetURLForDownloadRequest, opts ...grpc.CallOption) (*GetURLForDownloadResponse, error)
 }
 
 type librarianClient struct {
@@ -61,14 +64,26 @@ func (c *librarianClient) GetAllRegions(ctx context.Context, in *GetAllRegionsRe
 	return out, nil
 }
 
+func (c *librarianClient) GetURLForDownload(ctx context.Context, in *GetURLForDownloadRequest, opts ...grpc.CallOption) (*GetURLForDownloadResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetURLForDownloadResponse)
+	err := c.cc.Invoke(ctx, Librarian_GetURLForDownload_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LibrarianServer is the server API for Librarian service.
 // All implementations must embed UnimplementedLibrarianServer
 // for forward compatibility.
 type LibrarianServer interface {
 	// Отправка файла в ответ на запрос
 	SendFile(context.Context, *SendFileRequest) (*SendFileResponse, error)
-	// Отправить список регионов
+	// Получить список регионов
 	GetAllRegions(context.Context, *GetAllRegionsRequest) (*GetAllRegionsResponse, error)
+	// Получить ссылку для скачивания файла
+	GetURLForDownload(context.Context, *GetURLForDownloadRequest) (*GetURLForDownloadResponse, error)
 	mustEmbedUnimplementedLibrarianServer()
 }
 
@@ -84,6 +99,9 @@ func (UnimplementedLibrarianServer) SendFile(context.Context, *SendFileRequest) 
 }
 func (UnimplementedLibrarianServer) GetAllRegions(context.Context, *GetAllRegionsRequest) (*GetAllRegionsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllRegions not implemented")
+}
+func (UnimplementedLibrarianServer) GetURLForDownload(context.Context, *GetURLForDownloadRequest) (*GetURLForDownloadResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetURLForDownload not implemented")
 }
 func (UnimplementedLibrarianServer) mustEmbedUnimplementedLibrarianServer() {}
 func (UnimplementedLibrarianServer) testEmbeddedByValue()                   {}
@@ -142,6 +160,24 @@ func _Librarian_GetAllRegions_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Librarian_GetURLForDownload_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetURLForDownloadRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LibrarianServer).GetURLForDownload(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Librarian_GetURLForDownload_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LibrarianServer).GetURLForDownload(ctx, req.(*GetURLForDownloadRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Librarian_ServiceDesc is the grpc.ServiceDesc for Librarian service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -156,6 +192,10 @@ var Librarian_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAllRegions",
 			Handler:    _Librarian_GetAllRegions_Handler,
+		},
+		{
+			MethodName: "GetURLForDownload",
+			Handler:    _Librarian_GetURLForDownload_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

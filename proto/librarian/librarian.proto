@@ -8,13 +8,26 @@ service Librarian {
   // Отправка файла в ответ на запрос
   rpc SendFile(SendFileRequest) returns (SendFileResponse);
 
-  // Отправить список регионов
+  // Получить список регионов
   rpc GetAllRegions(GetAllRegionsRequest) returns (GetAllRegionsResponse);
+
+  // Получить ссылку для скачивания файла
+  rpc GetURLForDownload(GetURLForDownloadRequest) returns (GetURLForDownloadResponse);
 }
 
 /////////////////////////////////////////////////////////////////
 
-// Отправить список регионов
+// Получить ссылку для скачивания файла
+message GetURLForDownloadRequest{
+  string source_id = 1;
+}
+
+message GetURLForDownloadResponse{
+  string downloadURL = 1;
+}
+
+
+// Получить список регионов
 message GetAllRegionsRequest{}
 
 message GetAllRegionsResponse{
