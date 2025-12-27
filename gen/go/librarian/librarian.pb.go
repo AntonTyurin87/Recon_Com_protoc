@@ -22,26 +22,26 @@ const (
 )
 
 // Отправить список регионов
-type GetRegionsRequest struct {
+type GetAllRegionsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetRegionsRequest) Reset() {
-	*x = GetRegionsRequest{}
+func (x *GetAllRegionsRequest) Reset() {
+	*x = GetAllRegionsRequest{}
 	mi := &file_librarian_librarian_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetRegionsRequest) String() string {
+func (x *GetAllRegionsRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetRegionsRequest) ProtoMessage() {}
+func (*GetAllRegionsRequest) ProtoMessage() {}
 
-func (x *GetRegionsRequest) ProtoReflect() protoreflect.Message {
+func (x *GetAllRegionsRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_librarian_librarian_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -53,32 +53,32 @@ func (x *GetRegionsRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetRegionsRequest.ProtoReflect.Descriptor instead.
-func (*GetRegionsRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetAllRegionsRequest.ProtoReflect.Descriptor instead.
+func (*GetAllRegionsRequest) Descriptor() ([]byte, []int) {
 	return file_librarian_librarian_proto_rawDescGZIP(), []int{0}
 }
 
-type GetRegionsResponse struct {
+type GetAllRegionsResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Region        []*Region              `protobuf:"bytes,1,rep,name=region,proto3" json:"region,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetRegionsResponse) Reset() {
-	*x = GetRegionsResponse{}
+func (x *GetAllRegionsResponse) Reset() {
+	*x = GetAllRegionsResponse{}
 	mi := &file_librarian_librarian_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetRegionsResponse) String() string {
+func (x *GetAllRegionsResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetRegionsResponse) ProtoMessage() {}
+func (*GetAllRegionsResponse) ProtoMessage() {}
 
-func (x *GetRegionsResponse) ProtoReflect() protoreflect.Message {
+func (x *GetAllRegionsResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_librarian_librarian_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -90,12 +90,12 @@ func (x *GetRegionsResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetRegionsResponse.ProtoReflect.Descriptor instead.
-func (*GetRegionsResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetAllRegionsResponse.ProtoReflect.Descriptor instead.
+func (*GetAllRegionsResponse) Descriptor() ([]byte, []int) {
 	return file_librarian_librarian_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *GetRegionsResponse) GetRegion() []*Region {
+func (x *GetAllRegionsResponse) GetRegion() []*Region {
 	if x != nil {
 		return x.Region
 	}
@@ -257,9 +257,9 @@ var File_librarian_librarian_proto protoreflect.FileDescriptor
 
 const file_librarian_librarian_proto_rawDesc = "" +
 	"\n" +
-	"\x19librarian/librarian.proto\x12\tlibrarian\"\x13\n" +
-	"\x11GetRegionsRequest\"?\n" +
-	"\x12GetRegionsResponse\x12)\n" +
+	"\x19librarian/librarian.proto\x12\tlibrarian\"\x16\n" +
+	"\x14GetAllRegionsRequest\"B\n" +
+	"\x15GetAllRegionsResponse\x12)\n" +
 	"\x06region\x18\x01 \x03(\v2\x11.librarian.RegionR\x06region\"S\n" +
 	"\x06Region\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
@@ -268,11 +268,10 @@ const file_librarian_librarian_proto_rawDesc = "" +
 	"\x0fSendFileRequest\x12\x12\n" +
 	"\x04text\x18\x01 \x01(\tR\x04text\"&\n" +
 	"\x10SendFileResponse\x12\x12\n" +
-	"\x04file\x18\x01 \x01(\fR\x04file2\x9b\x01\n" +
+	"\x04file\x18\x01 \x01(\fR\x04file2\xa4\x01\n" +
 	"\tLibrarian\x12C\n" +
-	"\bSendFile\x12\x1a.librarian.SendFileRequest\x1a\x1b.librarian.SendFileResponse\x12I\n" +
-	"\n" +
-	"GetRegions\x12\x1c.librarian.GetRegionsRequest\x1a\x1d.librarian.GetRegionsResponseB\x16Z\x14recon_com.lib.v1;libb\x06proto3"
+	"\bSendFile\x12\x1a.librarian.SendFileRequest\x1a\x1b.librarian.SendFileResponse\x12R\n" +
+	"\rGetAllRegions\x12\x1f.librarian.GetAllRegionsRequest\x1a .librarian.GetAllRegionsResponseB\x16Z\x14recon_com.lib.v1;libb\x06proto3"
 
 var (
 	file_librarian_librarian_proto_rawDescOnce sync.Once
@@ -288,18 +287,18 @@ func file_librarian_librarian_proto_rawDescGZIP() []byte {
 
 var file_librarian_librarian_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_librarian_librarian_proto_goTypes = []any{
-	(*GetRegionsRequest)(nil),  // 0: librarian.GetRegionsRequest
-	(*GetRegionsResponse)(nil), // 1: librarian.GetRegionsResponse
-	(*Region)(nil),             // 2: librarian.Region
-	(*SendFileRequest)(nil),    // 3: librarian.SendFileRequest
-	(*SendFileResponse)(nil),   // 4: librarian.SendFileResponse
+	(*GetAllRegionsRequest)(nil),  // 0: librarian.GetAllRegionsRequest
+	(*GetAllRegionsResponse)(nil), // 1: librarian.GetAllRegionsResponse
+	(*Region)(nil),                // 2: librarian.Region
+	(*SendFileRequest)(nil),       // 3: librarian.SendFileRequest
+	(*SendFileResponse)(nil),      // 4: librarian.SendFileResponse
 }
 var file_librarian_librarian_proto_depIdxs = []int32{
-	2, // 0: librarian.GetRegionsResponse.region:type_name -> librarian.Region
+	2, // 0: librarian.GetAllRegionsResponse.region:type_name -> librarian.Region
 	3, // 1: librarian.Librarian.SendFile:input_type -> librarian.SendFileRequest
-	0, // 2: librarian.Librarian.GetRegions:input_type -> librarian.GetRegionsRequest
+	0, // 2: librarian.Librarian.GetAllRegions:input_type -> librarian.GetAllRegionsRequest
 	4, // 3: librarian.Librarian.SendFile:output_type -> librarian.SendFileResponse
-	1, // 4: librarian.Librarian.GetRegions:output_type -> librarian.GetRegionsResponse
+	1, // 4: librarian.Librarian.GetAllRegions:output_type -> librarian.GetAllRegionsResponse
 	3, // [3:5] is the sub-list for method output_type
 	1, // [1:3] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name

@@ -9,15 +9,15 @@ service Librarian {
   rpc SendFile(SendFileRequest) returns (SendFileResponse);
 
   // Отправить список регионов
-  rpc GetRegions(GetRegionsRequest) returns (GetRegionsResponse);
+  rpc GetAllRegions(GetAllRegionsRequest) returns (GetAllRegionsResponse);
 }
 
 /////////////////////////////////////////////////////////////////
 
 // Отправить список регионов
-message GetRegionsRequest{}
+message GetAllRegionsRequest{}
 
-message GetRegionsResponse{
+message GetAllRegionsResponse{
   repeated Region region = 1;
 }
 

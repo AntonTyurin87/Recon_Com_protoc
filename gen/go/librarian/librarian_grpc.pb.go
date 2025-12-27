@@ -19,8 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Librarian_SendFile_FullMethodName   = "/librarian.Librarian/SendFile"
-	Librarian_GetRegions_FullMethodName = "/librarian.Librarian/GetRegions"
+	Librarian_SendFile_FullMethodName      = "/librarian.Librarian/SendFile"
+	Librarian_GetAllRegions_FullMethodName = "/librarian.Librarian/GetAllRegions"
 )
 
 // LibrarianClient is the client API for Librarian service.
@@ -30,7 +30,7 @@ type LibrarianClient interface {
 	// Отправка файла в ответ на запрос
 	SendFile(ctx context.Context, in *SendFileRequest, opts ...grpc.CallOption) (*SendFileResponse, error)
 	// Отправить список регионов
-	GetRegions(ctx context.Context, in *GetRegionsRequest, opts ...grpc.CallOption) (*GetRegionsResponse, error)
+	GetAllRegions(ctx context.Context, in *GetAllRegionsRequest, opts ...grpc.CallOption) (*GetAllRegionsResponse, error)
 }
 
 type librarianClient struct {
@@ -51,10 +51,10 @@ func (c *librarianClient) SendFile(ctx context.Context, in *SendFileRequest, opt
 	return out, nil
 }
 
-func (c *librarianClient) GetRegions(ctx context.Context, in *GetRegionsRequest, opts ...grpc.CallOption) (*GetRegionsResponse, error) {
+func (c *librarianClient) GetAllRegions(ctx context.Context, in *GetAllRegionsRequest, opts ...grpc.CallOption) (*GetAllRegionsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetRegionsResponse)
-	err := c.cc.Invoke(ctx, Librarian_GetRegions_FullMethodName, in, out, cOpts...)
+	out := new(GetAllRegionsResponse)
+	err := c.cc.Invoke(ctx, Librarian_GetAllRegions_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +68,7 @@ type LibrarianServer interface {
 	// Отправка файла в ответ на запрос
 	SendFile(context.Context, *SendFileRequest) (*SendFileResponse, error)
 	// Отправить список регионов
-	GetRegions(context.Context, *GetRegionsRequest) (*GetRegionsResponse, error)
+	GetAllRegions(context.Context, *GetAllRegionsRequest) (*GetAllRegionsResponse, error)
 	mustEmbedUnimplementedLibrarianServer()
 }
 
@@ -82,8 +82,8 @@ type UnimplementedLibrarianServer struct{}
 func (UnimplementedLibrarianServer) SendFile(context.Context, *SendFileRequest) (*SendFileResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendFile not implemented")
 }
-func (UnimplementedLibrarianServer) GetRegions(context.Context, *GetRegionsRequest) (*GetRegionsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetRegions not implemented")
+func (UnimplementedLibrarianServer) GetAllRegions(context.Context, *GetAllRegionsRequest) (*GetAllRegionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllRegions not implemented")
 }
 func (UnimplementedLibrarianServer) mustEmbedUnimplementedLibrarianServer() {}
 func (UnimplementedLibrarianServer) testEmbeddedByValue()                   {}
@@ -124,20 +124,20 @@ func _Librarian_SendFile_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Librarian_GetRegions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetRegionsRequest)
+func _Librarian_GetAllRegions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAllRegionsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LibrarianServer).GetRegions(ctx, in)
+		return srv.(LibrarianServer).GetAllRegions(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Librarian_GetRegions_FullMethodName,
+		FullMethod: Librarian_GetAllRegions_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LibrarianServer).GetRegions(ctx, req.(*GetRegionsRequest))
+		return srv.(LibrarianServer).GetAllRegions(ctx, req.(*GetAllRegionsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -154,8 +154,8 @@ var Librarian_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Librarian_SendFile_Handler,
 		},
 		{
-			MethodName: "GetRegions",
-			Handler:    _Librarian_GetRegions_Handler,
+			MethodName: "GetAllRegions",
+			Handler:    _Librarian_GetAllRegions_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
