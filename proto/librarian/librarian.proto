@@ -22,7 +22,7 @@ message GetAllRegionsResponse{
 }
 
 message Region {
-  string id = 1;
+  string int = 1;
   string name_ru = 2;
   string description = 3;
 }

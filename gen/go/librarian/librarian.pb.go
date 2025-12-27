@@ -104,7 +104,7 @@ func (x *GetAllRegionsResponse) GetRegion() []*Region {
 
 type Region struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Int           string                 `protobuf:"bytes,1,opt,name=int,proto3" json:"int,omitempty"`
 	NameRu        string                 `protobuf:"bytes,2,opt,name=name_ru,json=nameRu,proto3" json:"name_ru,omitempty"`
 	Description   string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -141,9 +141,9 @@ func (*Region) Descriptor() ([]byte, []int) {
 	return file_librarian_librarian_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *Region) GetId() string {
+func (x *Region) GetInt() string {
 	if x != nil {
-		return x.Id
+		return x.Int
 	}
 	return ""
 }
@@ -260,9 +260,9 @@ const file_librarian_librarian_proto_rawDesc = "" +
 	"\x19librarian/librarian.proto\x12\tlibrarian\"\x16\n" +
 	"\x14GetAllRegionsRequest\"B\n" +
 	"\x15GetAllRegionsResponse\x12)\n" +
-	"\x06region\x18\x01 \x03(\v2\x11.librarian.RegionR\x06region\"S\n" +
-	"\x06Region\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
+	"\x06region\x18\x01 \x03(\v2\x11.librarian.RegionR\x06region\"U\n" +
+	"\x06Region\x12\x10\n" +
+	"\x03int\x18\x01 \x01(\tR\x03int\x12\x17\n" +
 	"\aname_ru\x18\x02 \x01(\tR\x06nameRu\x12 \n" +
 	"\vdescription\x18\x03 \x01(\tR\vdescription\"%\n" +
 	"\x0fSendFileRequest\x12\x12\n" +
