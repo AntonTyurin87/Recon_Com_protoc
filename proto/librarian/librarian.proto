@@ -35,7 +35,7 @@ message GetAllRegionsResponse{
 }
 
 message Region {
-  string int = 1;
+  int32 id = 1;
   string name_ru = 2;
   string description = 3;
 }
