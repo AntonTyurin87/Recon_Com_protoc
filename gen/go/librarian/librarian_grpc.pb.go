@@ -22,6 +22,7 @@ const (
 	Librarian_SendFile_FullMethodName           = "/librarian.Librarian/SendFile"
 	Librarian_GetAllRegions_FullMethodName      = "/librarian.Librarian/GetAllRegions"
 	Librarian_GetInfoForDownload_FullMethodName = "/librarian.Librarian/GetInfoForDownload"
+	Librarian_UploadFile_FullMethodName         = "/librarian.Librarian/UploadFile"
 )
 
 // LibrarianClient is the client API for Librarian service.
@@ -34,6 +35,8 @@ type LibrarianClient interface {
 	GetAllRegions(ctx context.Context, in *GetAllRegionsRequest, opts ...grpc.CallOption) (*GetAllRegionsResponse, error)
 	// Получить ссылку для скачивания файла
 	GetInfoForDownload(ctx context.Context, in *GetInfoForDownloadRequest, opts ...grpc.CallOption) (*GetInfoForDownloadResponse, error)
+	// Получить файл источника
+	UploadFile(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[UploadFileRequest, UploadFileResponse], error)
 }
 
 type librarianClient struct {
@@ -74,6 +77,19 @@ func (c *librarianClient) GetInfoForDownload(ctx context.Context, in *GetInfoFor
 	return out, nil
 }
 
+func (c *librarianClient) UploadFile(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[UploadFileRequest, UploadFileResponse], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &Librarian_ServiceDesc.Streams[0], Librarian_UploadFile_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[UploadFileRequest, UploadFileResponse]{ClientStream: stream}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type Librarian_UploadFileClient = grpc.ClientStreamingClient[UploadFileRequest, UploadFileResponse]
+
 // LibrarianServer is the server API for Librarian service.
 // All implementations must embed UnimplementedLibrarianServer
 // for forward compatibility.
@@ -84,6 +100,8 @@ type LibrarianServer interface {
 	GetAllRegions(context.Context, *GetAllRegionsRequest) (*GetAllRegionsResponse, error)
 	// Получить ссылку для скачивания файла
 	GetInfoForDownload(context.Context, *GetInfoForDownloadRequest) (*GetInfoForDownloadResponse, error)
+	// Получить файл источника
+	UploadFile(grpc.ClientStreamingServer[UploadFileRequest, UploadFileResponse]) error
 	mustEmbedUnimplementedLibrarianServer()
 }
 
@@ -102,6 +120,9 @@ func (UnimplementedLibrarianServer) GetAllRegions(context.Context, *GetAllRegion
 }
 func (UnimplementedLibrarianServer) GetInfoForDownload(context.Context, *GetInfoForDownloadRequest) (*GetInfoForDownloadResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetInfoForDownload not implemented")
+}
+func (UnimplementedLibrarianServer) UploadFile(grpc.ClientStreamingServer[UploadFileRequest, UploadFileResponse]) error {
+	return status.Errorf(codes.Unimplemented, "method UploadFile not implemented")
 }
 func (UnimplementedLibrarianServer) mustEmbedUnimplementedLibrarianServer() {}
 func (UnimplementedLibrarianServer) testEmbeddedByValue()                   {}
@@ -178,6 +199,13 @@ func _Librarian_GetInfoForDownload_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Librarian_UploadFile_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(LibrarianServer).UploadFile(&grpc.GenericServerStream[UploadFileRequest, UploadFileResponse]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type Librarian_UploadFileServer = grpc.ClientStreamingServer[UploadFileRequest, UploadFileResponse]
+
 // Librarian_ServiceDesc is the grpc.ServiceDesc for Librarian service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -198,6 +226,12 @@ var Librarian_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Librarian_GetInfoForDownload_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "UploadFile",
+			Handler:       _Librarian_UploadFile_Handler,
+			ClientStreams: true,
+		},
+	},
 	Metadata: "librarian/librarian.proto",
 }

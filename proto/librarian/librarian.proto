@@ -4,6 +4,9 @@ package librarian;
 
 option go_package = "recon_com.lib.v1;lib";
 
+import "google/protobuf/timestamp.proto";
+import "librarian/file_upload.proto";
+
 service Librarian {
   // Отправка файла в ответ на запрос
   rpc SendFile(SendFileRequest) returns (SendFileResponse);
@@ -13,9 +16,79 @@ service Librarian {
 
   // Получить ссылку для скачивания файла
   rpc GetInfoForDownload(GetInfoForDownloadRequest) returns (GetInfoForDownloadResponse);
+
+  // Получить файл источника
+  rpc UploadFile(stream UploadFileRequest) returns (UploadFileResponse);
 }
 
 /////////////////////////////////////////////////////////////////
+
+// Получить файл источника
+message UploadFileRequest {
+  oneof request {
+    FileMetadata metadata = 1;      // Первое сообщение должно содержать метаданные
+    FileChunk chunkData = 2;            // Последующие сообщения содержат чанки
+  }
+  // Общая информация о запросе
+  string request_id = 4;            // Уникальный ID запроса для отслеживания
+  google.protobuf.Timestamp request_time = 5; // Время запроса
+}
+
+message UploadFileResponse { // UploadResponse - ответ на загрузку файла
+  string file_id = 1;               // ID загруженного файла (может отличаться от отправленного)
+  string original_file_id = 2;      // Оригинальный ID из запроса
+  UploadStatus status = 3;          // Статус загрузки
+
+  // Статистика загрузки
+  int64 bytes_received = 4;         // Количество полученных байт
+  int32 chunks_received = 5;        // Количество полученных чанков
+  int64 total_size = 6;             // Общий размер файла
+  int64 processing_time_ms = 7;     // Время обработки в миллисекундах
+
+  // Валидация
+  string calculated_sha256 = 8;     // Рассчитанный SHA256 хеш
+  bool hash_verification_passed = 9; // Пройдена ли проверка хеша
+  string hash_verification_message = 10; // Сообщение о проверке хеша
+
+  // Дополнительная информация
+  map<string, string> metadata = 11; // Дополнительные метаданные от сервера
+
+  // Временные метки
+  google.protobuf.Timestamp upload_started_at = 12; // Когда началась загрузка TODO нужно ли?
+  google.protobuf.Timestamp upload_completed_at = 13; // Когда завершилась загрузка TODO нужно ли?
+
+  // Информация о чанках
+  repeated int32 missing_chunks = 14; // Номера отсутствующих чанков (если status = PARTIAL)
+  bool can_resume = 15;            // Можно ли возобновить загрузку
+
+  // Ошибки
+  ErrorDetail error = 16;          // Детальная информация об ошибке (если есть)
+}
+
+// Статус операции
+enum UploadStatus {
+  UPLOAD_STATUS_UNKNOWN = 0;
+  UPLOAD_STATUS_IN_PROGRESS = 1;  // Загрузка в процессе
+  UPLOAD_STATUS_COMPLETED = 2;    // Загрузка завершена успешно
+  UPLOAD_STATUS_FAILED = 3;       // Загрузка провалилась
+  UPLOAD_STATUS_PARTIAL = 4;      // Частичная загрузка (не все чанки)
+}
+
+// ErrorDetail - детальная информация об ошибке
+message ErrorDetail {
+  string code = 1;                 // Код ошибки
+  string message = 2;              // Сообщение об ошибке
+  string details = 3;              // Детали ошибки
+
+  // Контекст ошибки
+  map<string, string> context = 4; // Контекстные данные
+  repeated string stack_trace = 5; // Стек вызовов (для отладки)
+
+  // Предложения по исправлению
+  repeated string suggestions = 6; // Предложения по исправлению
+  bool retryable = 7;              // Можно ли повторить операцию
+  int32 retry_after_seconds = 8;   // Через сколько секунд можно повторить
+}
 
 // Получить ссылку для скачивания файла
 message GetInfoForDownloadRequest{
@@ -29,7 +102,7 @@ message GetInfoForDownloadResponse{
 
 message FileInfo{
   int64 size = 1;
-  string media_type = 2;
+  string mime_type = 2;
 }
 
 // Получить список регионов
