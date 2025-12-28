@@ -24,8 +24,12 @@ message GetURLForDownloadRequest{
 
 message GetURLForDownloadResponse{
   string downloadURL = 1;
+  FileInfo file_info = 2;
 }
 
+message FileInfo{
+  int64 size = 1;
+}
 
 // Получить список регионов
 message GetAllRegionsRequest{}
