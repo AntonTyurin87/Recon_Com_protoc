@@ -12,23 +12,24 @@ service Librarian {
   rpc GetAllRegions(GetAllRegionsRequest) returns (GetAllRegionsResponse);
 
   // Получить ссылку для скачивания файла
-  rpc GetURLForDownload(GetURLForDownloadRequest) returns (GetURLForDownloadResponse);
+  rpc GetInfoForDownload(GetInfoForDownloadRequest) returns (GetInfoForDownloadResponse);
 }
 
 /////////////////////////////////////////////////////////////////
 
 // Получить ссылку для скачивания файла
-message GetURLForDownloadRequest{
+message GetInfoForDownloadRequest{
   int32 source_id = 1;
 }
 
-message GetURLForDownloadResponse{
+message GetInfoForDownloadResponse{
   string downloadURL = 1;
   FileInfo file_info = 2;
 }
 
 message FileInfo{
   int64 size = 1;
+  string media_type = 2;
 }
 
 // Получить список регионов
