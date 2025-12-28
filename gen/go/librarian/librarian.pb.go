@@ -121,7 +121,7 @@ func (x *GetInfoForDownloadResponse) GetFileInfo() *FileInfo {
 type FileInfo struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Size          int64                  `protobuf:"varint,1,opt,name=size,proto3" json:"size,omitempty"`
-	MediaType     string                 `protobuf:"bytes,2,opt,name=media_type,json=mediaType,proto3" json:"media_type,omitempty"`
+	MimeType      string                 `protobuf:"bytes,2,opt,name=mime_type,json=mimeType,proto3" json:"mime_type,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -163,9 +163,9 @@ func (x *FileInfo) GetSize() int64 {
 	return 0
 }
 
-func (x *FileInfo) GetMediaType() string {
+func (x *FileInfo) GetMimeType() string {
 	if x != nil {
-		return x.MediaType
+		return x.MimeType
 	}
 	return ""
 }
@@ -411,11 +411,10 @@ const file_librarian_librarian_proto_rawDesc = "" +
 	"\tsource_id\x18\x01 \x01(\x05R\bsourceId\"p\n" +
 	"\x1aGetInfoForDownloadResponse\x12 \n" +
 	"\vdownloadURL\x18\x01 \x01(\tR\vdownloadURL\x120\n" +
-	"\tfile_info\x18\x02 \x01(\v2\x13.librarian.FileInfoR\bfileInfo\"=\n" +
+	"\tfile_info\x18\x02 \x01(\v2\x13.librarian.FileInfoR\bfileInfo\";\n" +
 	"\bFileInfo\x12\x12\n" +
-	"\x04size\x18\x01 \x01(\x03R\x04size\x12\x1d\n" +
-	"\n" +
-	"media_type\x18\x02 \x01(\tR\tmediaType\"\x16\n" +
+	"\x04size\x18\x01 \x01(\x03R\x04size\x12\x1b\n" +
+	"\tmime_type\x18\x02 \x01(\tR\bmimeType\"\x16\n" +
 	"\x14GetAllRegionsRequest\"B\n" +
 	"\x15GetAllRegionsResponse\x12)\n" +
 	"\x06region\x18\x01 \x03(\v2\x11.librarian.RegionR\x06region\"S\n" +

@@ -29,7 +29,7 @@ message GetInfoForDownloadResponse{
 
 message FileInfo{
   int64 size = 1;
-  string media_type = 2;
+  string mime_type = 2;
 }
 
 // Получить список регионов
