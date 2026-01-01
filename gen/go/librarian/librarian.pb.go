@@ -83,7 +83,7 @@ type UploadFileRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Types that are valid to be assigned to Request:
 	//
-	//	*UploadFileRequest_Metadata
+	//	*UploadFileRequest_MetaData
 	//	*UploadFileRequest_ChunkData
 	Request isUploadFileRequest_Request `protobuf_oneof:"request"`
 	// Общая информация о запросе
@@ -130,10 +130,10 @@ func (x *UploadFileRequest) GetRequest() isUploadFileRequest_Request {
 	return nil
 }
 
-func (x *UploadFileRequest) GetMetadata() *FileMetadata {
+func (x *UploadFileRequest) GetMetaData() *FileMetadata {
 	if x != nil {
-		if x, ok := x.Request.(*UploadFileRequest_Metadata); ok {
-			return x.Metadata
+		if x, ok := x.Request.(*UploadFileRequest_MetaData); ok {
+			return x.MetaData
 		}
 	}
 	return nil
@@ -166,15 +166,15 @@ type isUploadFileRequest_Request interface {
 	isUploadFileRequest_Request()
 }
 
-type UploadFileRequest_Metadata struct {
-	Metadata *FileMetadata `protobuf:"bytes,1,opt,name=metadata,proto3,oneof"` // Первое сообщение должно содержать метаданные
+type UploadFileRequest_MetaData struct {
+	MetaData *FileMetadata `protobuf:"bytes,1,opt,name=meta_data,json=metaData,proto3,oneof"` // Первое сообщение должно содержать метаданные
 }
 
 type UploadFileRequest_ChunkData struct {
-	ChunkData *FileChunk `protobuf:"bytes,2,opt,name=chunkData,proto3,oneof"` // Последующие сообщения содержат чанки
+	ChunkData *FileChunk `protobuf:"bytes,2,opt,name=chunk_data,json=chunkData,proto3,oneof"` // Последующие сообщения содержат чанки
 }
 
-func (*UploadFileRequest_Metadata) isUploadFileRequest_Request() {}
+func (*UploadFileRequest_MetaData) isUploadFileRequest_Request() {}
 
 func (*UploadFileRequest_ChunkData) isUploadFileRequest_Request() {}
 
@@ -836,10 +836,11 @@ var File_librarian_librarian_proto protoreflect.FileDescriptor
 
 const file_librarian_librarian_proto_rawDesc = "" +
 	"\n" +
-	"\x19librarian/librarian.proto\x12\tlibrarian\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1blibrarian/file_upload.proto\"\xe9\x01\n" +
-	"\x11UploadFileRequest\x125\n" +
-	"\bmetadata\x18\x01 \x01(\v2\x17.librarian.FileMetadataH\x00R\bmetadata\x124\n" +
-	"\tchunkData\x18\x02 \x01(\v2\x14.librarian.FileChunkH\x00R\tchunkData\x12\x1d\n" +
+	"\x19librarian/librarian.proto\x12\tlibrarian\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1blibrarian/file_upload.proto\"\xeb\x01\n" +
+	"\x11UploadFileRequest\x126\n" +
+	"\tmeta_data\x18\x01 \x01(\v2\x17.librarian.FileMetadataH\x00R\bmetaData\x125\n" +
+	"\n" +
+	"chunk_data\x18\x02 \x01(\v2\x14.librarian.FileChunkH\x00R\tchunkData\x12\x1d\n" +
 	"\n" +
 	"request_id\x18\x04 \x01(\tR\trequestId\x12=\n" +
 	"\frequest_time\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\vrequestTimeB\t\n" +
@@ -946,8 +947,8 @@ var file_librarian_librarian_proto_goTypes = []any{
 	(*timestamppb.Timestamp)(nil),      // 16: google.protobuf.Timestamp
 }
 var file_librarian_librarian_proto_depIdxs = []int32{
-	14, // 0: librarian.UploadFileRequest.metadata:type_name -> librarian.FileMetadata
-	15, // 1: librarian.UploadFileRequest.chunkData:type_name -> librarian.FileChunk
+	14, // 0: librarian.UploadFileRequest.meta_data:type_name -> librarian.FileMetadata
+	15, // 1: librarian.UploadFileRequest.chunk_data:type_name -> librarian.FileChunk
 	16, // 2: librarian.UploadFileRequest.request_time:type_name -> google.protobuf.Timestamp
 	0,  // 3: librarian.UploadFileResponse.status:type_name -> librarian.UploadStatus
 	12, // 4: librarian.UploadFileResponse.metadata:type_name -> librarian.UploadFileResponse.MetadataEntry
@@ -979,7 +980,7 @@ func file_librarian_librarian_proto_init() {
 	}
 	file_librarian_file_upload_proto_init()
 	file_librarian_librarian_proto_msgTypes[0].OneofWrappers = []any{
-		(*UploadFileRequest_Metadata)(nil),
+		(*UploadFileRequest_MetaData)(nil),
 		(*UploadFileRequest_ChunkData)(nil),
 	}
 	type x struct{}

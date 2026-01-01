@@ -26,8 +26,8 @@ service Librarian {
 // Получить файл источника
 message UploadFileRequest {
   oneof request {
-    FileMetadata metadata = 1;      // Первое сообщение должно содержать метаданные
-    FileChunk chunkData = 2;            // Последующие сообщения содержат чанки
+    FileMetadata meta_data = 1;      // Первое сообщение должно содержать метаданные
+    FileChunk chunk_data = 2;            // Последующие сообщения содержат чанки
   }
   // Общая информация о запросе
   string request_id = 4;            // Уникальный ID запроса для отслеживания
