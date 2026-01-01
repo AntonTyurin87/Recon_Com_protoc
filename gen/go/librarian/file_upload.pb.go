@@ -172,8 +172,8 @@ func (FileFormat) EnumDescriptor() ([]byte, []int) {
 // FileMetadata - метаданные файла
 type FileMetadata struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	Id             string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"` // Уникальный ID файла (генерируется клиентом или сервером)
-	Name           string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Id             string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                                   // Уникальный ID файла (генерируется клиентом или сервером)
+	Name           string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`                               // Имя файла
 	Size           int64                  `protobuf:"varint,3,opt,name=size,proto3" json:"size,omitempty"`                              // Размер файла в байтах
 	HashSha256     string                 `protobuf:"bytes,4,opt,name=hash_sha256,json=hashSha256,proto3" json:"hash_sha256,omitempty"` // SHA256 хеш всего файла
 	CreatedAt      *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`    // Время создания TODO нужно ли?

@@ -9,7 +9,7 @@ import "google/protobuf/timestamp.proto";
 // FileMetadata - метаданные файла
 message FileMetadata {
   string id = 1;                    // Уникальный ID файла (генерируется клиентом или сервером)
-  string name = 2;
+  string name = 2;                  // Имя файла
   int64 size = 3;                   // Размер файла в байтах
   string hash_sha256 = 4;           // SHA256 хеш всего файла
   google.protobuf.Timestamp created_at = 5;  // Время создания TODO нужно ли?
