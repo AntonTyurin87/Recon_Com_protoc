@@ -172,12 +172,13 @@ func (FileFormat) EnumDescriptor() ([]byte, []int) {
 // FileMetadata - метаданные файла
 type FileMetadata struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	Id             string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                                   // Уникальный ID файла (генерируется клиентом или сервером)
-	Size           int64                  `protobuf:"varint,2,opt,name=size,proto3" json:"size,omitempty"`                              // Размер файла в байтах
-	HashSha256     string                 `protobuf:"bytes,3,opt,name=hash_sha256,json=hashSha256,proto3" json:"hash_sha256,omitempty"` // SHA256 хеш всего файла
-	CreatedAt      *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`    // Время создания TODO нужно ли?
-	UpdatedAt      *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`    // Время обновления TODO нужно ли?
-	FileSourceData *FileSourceData        `protobuf:"bytes,6,opt,name=file_source_data,json=fileSourceData,proto3" json:"file_source_data,omitempty"`
+	Id             string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"` // Уникальный ID файла (генерируется клиентом или сервером)
+	Name           string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Size           int64                  `protobuf:"varint,3,opt,name=size,proto3" json:"size,omitempty"`                              // Размер файла в байтах
+	HashSha256     string                 `protobuf:"bytes,4,opt,name=hash_sha256,json=hashSha256,proto3" json:"hash_sha256,omitempty"` // SHA256 хеш всего файла
+	CreatedAt      *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`    // Время создания TODO нужно ли?
+	UpdatedAt      *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`    // Время обновления TODO нужно ли?
+	FileSourceData *FileSourceData        `protobuf:"bytes,7,opt,name=file_source_data,json=fileSourceData,proto3" json:"file_source_data,omitempty"`
 	// Дополнительные метаданные
 	Metadata      map[string]string `protobuf:"bytes,11,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
@@ -217,6 +218,13 @@ func (*FileMetadata) Descriptor() ([]byte, []int) {
 func (x *FileMetadata) GetId() string {
 	if x != nil {
 		return x.Id
+	}
+	return ""
+}
+
+func (x *FileMetadata) GetName() string {
+	if x != nil {
+		return x.Name
 	}
 	return ""
 }
@@ -904,17 +912,18 @@ var File_librarian_file_upload_proto protoreflect.FileDescriptor
 
 const file_librarian_file_upload_proto_rawDesc = "" +
 	"\n" +
-	"\x1blibrarian/file_upload.proto\x12\tlibrarian\x1a\x1fgoogle/protobuf/timestamp.proto\"\x8e\x03\n" +
+	"\x1blibrarian/file_upload.proto\x12\tlibrarian\x1a\x1fgoogle/protobuf/timestamp.proto\"\xa2\x03\n" +
 	"\fFileMetadata\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
-	"\x04size\x18\x02 \x01(\x03R\x04size\x12\x1f\n" +
-	"\vhash_sha256\x18\x03 \x01(\tR\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x12\n" +
+	"\x04size\x18\x03 \x01(\x03R\x04size\x12\x1f\n" +
+	"\vhash_sha256\x18\x04 \x01(\tR\n" +
 	"hashSha256\x129\n" +
 	"\n" +
-	"created_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
+	"created_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
 	"\n" +
-	"updated_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12C\n" +
-	"\x10file_source_data\x18\x06 \x01(\v2\x19.librarian.FileSourceDataR\x0efileSourceData\x12A\n" +
+	"updated_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12C\n" +
+	"\x10file_source_data\x18\a \x01(\v2\x19.librarian.FileSourceDataR\x0efileSourceData\x12A\n" +
 	"\bmetadata\x18\v \x03(\v2%.librarian.FileMetadata.MetadataEntryR\bmetadata\x1a;\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +

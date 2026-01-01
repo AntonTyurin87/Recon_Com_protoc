@@ -9,11 +9,12 @@ import "google/protobuf/timestamp.proto";
 // FileMetadata - метаданные файла
 message FileMetadata {
   string id = 1;                    // Уникальный ID файла (генерируется клиентом или сервером)
-  int64 size = 2;                   // Размер файла в байтах
-  string hash_sha256 = 3;           // SHA256 хеш всего файла
-  google.protobuf.Timestamp created_at = 4;  // Время создания TODO нужно ли?
-  google.protobuf.Timestamp updated_at = 5; // Время обновления TODO нужно ли?
-  FileSourceData file_source_data = 6;
+  string name = 2;
+  int64 size = 3;                   // Размер файла в байтах
+  string hash_sha256 = 4;           // SHA256 хеш всего файла
+  google.protobuf.Timestamp created_at = 5;  // Время создания TODO нужно ли?
+  google.protobuf.Timestamp updated_at = 6; // Время обновления TODO нужно ли?
+  FileSourceData file_source_data = 7;
 
   // Дополнительные метаданные
   map<string, string> metadata = 11;
