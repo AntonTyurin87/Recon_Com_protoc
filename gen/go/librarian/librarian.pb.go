@@ -9,7 +9,6 @@ package lib
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
-	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -22,193 +21,73 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Статус операции
-type UploadStatus int32
+// Тип источника
+type SourceType int32
 
 const (
-	UploadStatus_UPLOAD_STATUS_UNKNOWN     UploadStatus = 0
-	UploadStatus_UPLOAD_STATUS_IN_PROGRESS UploadStatus = 1 // Загрузка в процессе
-	UploadStatus_UPLOAD_STATUS_COMPLETED   UploadStatus = 2 // Загрузка завершена успешно
-	UploadStatus_UPLOAD_STATUS_FAILED      UploadStatus = 3 // Загрузка провалилась
-	UploadStatus_UPLOAD_STATUS_PARTIAL     UploadStatus = 4 // Частичная загрузка (не все чанки)
+	SourceType_SOURCE_TYPE_UNKNOWN  SourceType = 0
+	SourceType_SOURCE_TYPE_BOOK     SourceType = 1
+	SourceType_SOURCE_TYPE_ARTICLE  SourceType = 2
+	SourceType_SOURCE_TYPE_FRAGMENT SourceType = 3
+	SourceType_SOURCE_TYPE_PHOTO    SourceType = 4
 )
 
-// Enum value maps for UploadStatus.
+// Enum value maps for SourceType.
 var (
-	UploadStatus_name = map[int32]string{
-		0: "UPLOAD_STATUS_UNKNOWN",
-		1: "UPLOAD_STATUS_IN_PROGRESS",
-		2: "UPLOAD_STATUS_COMPLETED",
-		3: "UPLOAD_STATUS_FAILED",
-		4: "UPLOAD_STATUS_PARTIAL",
+	SourceType_name = map[int32]string{
+		0: "SOURCE_TYPE_UNKNOWN",
+		1: "SOURCE_TYPE_BOOK",
+		2: "SOURCE_TYPE_ARTICLE",
+		3: "SOURCE_TYPE_FRAGMENT",
+		4: "SOURCE_TYPE_PHOTO",
 	}
-	UploadStatus_value = map[string]int32{
-		"UPLOAD_STATUS_UNKNOWN":     0,
-		"UPLOAD_STATUS_IN_PROGRESS": 1,
-		"UPLOAD_STATUS_COMPLETED":   2,
-		"UPLOAD_STATUS_FAILED":      3,
-		"UPLOAD_STATUS_PARTIAL":     4,
+	SourceType_value = map[string]int32{
+		"SOURCE_TYPE_UNKNOWN":  0,
+		"SOURCE_TYPE_BOOK":     1,
+		"SOURCE_TYPE_ARTICLE":  2,
+		"SOURCE_TYPE_FRAGMENT": 3,
+		"SOURCE_TYPE_PHOTO":    4,
 	}
 )
 
-func (x UploadStatus) Enum() *UploadStatus {
-	p := new(UploadStatus)
+func (x SourceType) Enum() *SourceType {
+	p := new(SourceType)
 	*p = x
 	return p
 }
 
-func (x UploadStatus) String() string {
+func (x SourceType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (UploadStatus) Descriptor() protoreflect.EnumDescriptor {
+func (SourceType) Descriptor() protoreflect.EnumDescriptor {
 	return file_librarian_librarian_proto_enumTypes[0].Descriptor()
 }
 
-func (UploadStatus) Type() protoreflect.EnumType {
+func (SourceType) Type() protoreflect.EnumType {
 	return &file_librarian_librarian_proto_enumTypes[0]
 }
 
-func (x UploadStatus) Number() protoreflect.EnumNumber {
+func (x SourceType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use UploadStatus.Descriptor instead.
-func (UploadStatus) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use SourceType.Descriptor instead.
+func (SourceType) EnumDescriptor() ([]byte, []int) {
 	return file_librarian_librarian_proto_rawDescGZIP(), []int{0}
 }
-
-// Получить файл источника
-type UploadFileRequest struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Types that are valid to be assigned to Request:
-	//
-	//	*UploadFileRequest_MetaData
-	//	*UploadFileRequest_ChunkData
-	Request isUploadFileRequest_Request `protobuf_oneof:"request"`
-	// Общая информация о запросе
-	RequestId     string                 `protobuf:"bytes,4,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`       // Уникальный ID запроса для отслеживания
-	RequestTime   *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=request_time,json=requestTime,proto3" json:"request_time,omitempty"` // Время запроса
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UploadFileRequest) Reset() {
-	*x = UploadFileRequest{}
-	mi := &file_librarian_librarian_proto_msgTypes[0]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UploadFileRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UploadFileRequest) ProtoMessage() {}
-
-func (x *UploadFileRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_librarian_librarian_proto_msgTypes[0]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UploadFileRequest.ProtoReflect.Descriptor instead.
-func (*UploadFileRequest) Descriptor() ([]byte, []int) {
-	return file_librarian_librarian_proto_rawDescGZIP(), []int{0}
-}
-
-func (x *UploadFileRequest) GetRequest() isUploadFileRequest_Request {
-	if x != nil {
-		return x.Request
-	}
-	return nil
-}
-
-func (x *UploadFileRequest) GetMetaData() *FileMetadata {
-	if x != nil {
-		if x, ok := x.Request.(*UploadFileRequest_MetaData); ok {
-			return x.MetaData
-		}
-	}
-	return nil
-}
-
-func (x *UploadFileRequest) GetChunkData() *FileChunk {
-	if x != nil {
-		if x, ok := x.Request.(*UploadFileRequest_ChunkData); ok {
-			return x.ChunkData
-		}
-	}
-	return nil
-}
-
-func (x *UploadFileRequest) GetRequestId() string {
-	if x != nil {
-		return x.RequestId
-	}
-	return ""
-}
-
-func (x *UploadFileRequest) GetRequestTime() *timestamppb.Timestamp {
-	if x != nil {
-		return x.RequestTime
-	}
-	return nil
-}
-
-type isUploadFileRequest_Request interface {
-	isUploadFileRequest_Request()
-}
-
-type UploadFileRequest_MetaData struct {
-	MetaData *FileMetadata `protobuf:"bytes,1,opt,name=meta_data,json=metaData,proto3,oneof"` // Первое сообщение должно содержать метаданные
-}
-
-type UploadFileRequest_ChunkData struct {
-	ChunkData *FileChunk `protobuf:"bytes,2,opt,name=chunk_data,json=chunkData,proto3,oneof"` // Последующие сообщения содержат чанки
-}
-
-func (*UploadFileRequest_MetaData) isUploadFileRequest_Request() {}
-
-func (*UploadFileRequest_ChunkData) isUploadFileRequest_Request() {}
 
 type UploadFileResponse struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	FileId         string                 `protobuf:"bytes,1,opt,name=file_id,json=fileId,proto3" json:"file_id,omitempty"`                           // ID загруженного файла (может отличаться от отправленного)
 	OriginalFileId string                 `protobuf:"bytes,2,opt,name=original_file_id,json=originalFileId,proto3" json:"original_file_id,omitempty"` // Оригинальный ID из запроса
-	Status         UploadStatus           `protobuf:"varint,3,opt,name=status,proto3,enum=librarian.UploadStatus" json:"status,omitempty"`            // Статус загрузки
-	// Статистика загрузки
-	BytesReceived    int64 `protobuf:"varint,4,opt,name=bytes_received,json=bytesReceived,proto3" json:"bytes_received,omitempty"`            // Количество полученных байт
-	ChunksReceived   int32 `protobuf:"varint,5,opt,name=chunks_received,json=chunksReceived,proto3" json:"chunks_received,omitempty"`         // Количество полученных чанков
-	TotalSize        int64 `protobuf:"varint,6,opt,name=total_size,json=totalSize,proto3" json:"total_size,omitempty"`                        // Общий размер файла
-	ProcessingTimeMs int64 `protobuf:"varint,7,opt,name=processing_time_ms,json=processingTimeMs,proto3" json:"processing_time_ms,omitempty"` // Время обработки в миллисекундах
-	// Валидация
-	CalculatedSha256        string `protobuf:"bytes,8,opt,name=calculated_sha256,json=calculatedSha256,proto3" json:"calculated_sha256,omitempty"`                         // Рассчитанный SHA256 хеш
-	HashVerificationPassed  bool   `protobuf:"varint,9,opt,name=hash_verification_passed,json=hashVerificationPassed,proto3" json:"hash_verification_passed,omitempty"`    // Пройдена ли проверка хеша
-	HashVerificationMessage string `protobuf:"bytes,10,opt,name=hash_verification_message,json=hashVerificationMessage,proto3" json:"hash_verification_message,omitempty"` // Сообщение о проверке хеша
-	// Дополнительная информация
-	Metadata map[string]string `protobuf:"bytes,11,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"` // Дополнительные метаданные от сервера
-	// Временные метки
-	UploadStartedAt   *timestamppb.Timestamp `protobuf:"bytes,12,opt,name=upload_started_at,json=uploadStartedAt,proto3" json:"upload_started_at,omitempty"`       // Когда началась загрузка TODO нужно ли?
-	UploadCompletedAt *timestamppb.Timestamp `protobuf:"bytes,13,opt,name=upload_completed_at,json=uploadCompletedAt,proto3" json:"upload_completed_at,omitempty"` // Когда завершилась загрузка TODO нужно ли?
-	// Информация о чанках
-	MissingChunks []int32 `protobuf:"varint,14,rep,packed,name=missing_chunks,json=missingChunks,proto3" json:"missing_chunks,omitempty"` // Номера отсутствующих чанков (если status = PARTIAL)
-	CanResume     bool    `protobuf:"varint,15,opt,name=can_resume,json=canResume,proto3" json:"can_resume,omitempty"`                    // Можно ли возобновить загрузку
-	// Ошибки
-	Error         *ErrorDetail `protobuf:"bytes,16,opt,name=error,proto3" json:"error,omitempty"` // Детальная информация об ошибке (если есть)
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *UploadFileResponse) Reset() {
 	*x = UploadFileResponse{}
-	mi := &file_librarian_librarian_proto_msgTypes[1]
+	mi := &file_librarian_librarian_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -220,7 +99,7 @@ func (x *UploadFileResponse) String() string {
 func (*UploadFileResponse) ProtoMessage() {}
 
 func (x *UploadFileResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_librarian_librarian_proto_msgTypes[1]
+	mi := &file_librarian_librarian_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -233,7 +112,7 @@ func (x *UploadFileResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UploadFileResponse.ProtoReflect.Descriptor instead.
 func (*UploadFileResponse) Descriptor() ([]byte, []int) {
-	return file_librarian_librarian_proto_rawDescGZIP(), []int{1}
+	return file_librarian_librarian_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *UploadFileResponse) GetFileId() string {
@@ -250,207 +129,6 @@ func (x *UploadFileResponse) GetOriginalFileId() string {
 	return ""
 }
 
-func (x *UploadFileResponse) GetStatus() UploadStatus {
-	if x != nil {
-		return x.Status
-	}
-	return UploadStatus_UPLOAD_STATUS_UNKNOWN
-}
-
-func (x *UploadFileResponse) GetBytesReceived() int64 {
-	if x != nil {
-		return x.BytesReceived
-	}
-	return 0
-}
-
-func (x *UploadFileResponse) GetChunksReceived() int32 {
-	if x != nil {
-		return x.ChunksReceived
-	}
-	return 0
-}
-
-func (x *UploadFileResponse) GetTotalSize() int64 {
-	if x != nil {
-		return x.TotalSize
-	}
-	return 0
-}
-
-func (x *UploadFileResponse) GetProcessingTimeMs() int64 {
-	if x != nil {
-		return x.ProcessingTimeMs
-	}
-	return 0
-}
-
-func (x *UploadFileResponse) GetCalculatedSha256() string {
-	if x != nil {
-		return x.CalculatedSha256
-	}
-	return ""
-}
-
-func (x *UploadFileResponse) GetHashVerificationPassed() bool {
-	if x != nil {
-		return x.HashVerificationPassed
-	}
-	return false
-}
-
-func (x *UploadFileResponse) GetHashVerificationMessage() string {
-	if x != nil {
-		return x.HashVerificationMessage
-	}
-	return ""
-}
-
-func (x *UploadFileResponse) GetMetadata() map[string]string {
-	if x != nil {
-		return x.Metadata
-	}
-	return nil
-}
-
-func (x *UploadFileResponse) GetUploadStartedAt() *timestamppb.Timestamp {
-	if x != nil {
-		return x.UploadStartedAt
-	}
-	return nil
-}
-
-func (x *UploadFileResponse) GetUploadCompletedAt() *timestamppb.Timestamp {
-	if x != nil {
-		return x.UploadCompletedAt
-	}
-	return nil
-}
-
-func (x *UploadFileResponse) GetMissingChunks() []int32 {
-	if x != nil {
-		return x.MissingChunks
-	}
-	return nil
-}
-
-func (x *UploadFileResponse) GetCanResume() bool {
-	if x != nil {
-		return x.CanResume
-	}
-	return false
-}
-
-func (x *UploadFileResponse) GetError() *ErrorDetail {
-	if x != nil {
-		return x.Error
-	}
-	return nil
-}
-
-// ErrorDetail - детальная информация об ошибке
-type ErrorDetail struct {
-	state   protoimpl.MessageState `protogen:"open.v1"`
-	Code    string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`       // Код ошибки
-	Message string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"` // Сообщение об ошибке
-	Details string                 `protobuf:"bytes,3,opt,name=details,proto3" json:"details,omitempty"` // Детали ошибки
-	// Контекст ошибки
-	Context    map[string]string `protobuf:"bytes,4,rep,name=context,proto3" json:"context,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"` // Контекстные данные
-	StackTrace []string          `protobuf:"bytes,5,rep,name=stack_trace,json=stackTrace,proto3" json:"stack_trace,omitempty"`                                                   // Стек вызовов (для отладки)
-	// Предложения по исправлению
-	Suggestions       []string `protobuf:"bytes,6,rep,name=suggestions,proto3" json:"suggestions,omitempty"`                                         // Предложения по исправлению
-	Retryable         bool     `protobuf:"varint,7,opt,name=retryable,proto3" json:"retryable,omitempty"`                                            // Можно ли повторить операцию
-	RetryAfterSeconds int32    `protobuf:"varint,8,opt,name=retry_after_seconds,json=retryAfterSeconds,proto3" json:"retry_after_seconds,omitempty"` // Через сколько секунд можно повторить
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
-}
-
-func (x *ErrorDetail) Reset() {
-	*x = ErrorDetail{}
-	mi := &file_librarian_librarian_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ErrorDetail) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ErrorDetail) ProtoMessage() {}
-
-func (x *ErrorDetail) ProtoReflect() protoreflect.Message {
-	mi := &file_librarian_librarian_proto_msgTypes[2]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ErrorDetail.ProtoReflect.Descriptor instead.
-func (*ErrorDetail) Descriptor() ([]byte, []int) {
-	return file_librarian_librarian_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *ErrorDetail) GetCode() string {
-	if x != nil {
-		return x.Code
-	}
-	return ""
-}
-
-func (x *ErrorDetail) GetMessage() string {
-	if x != nil {
-		return x.Message
-	}
-	return ""
-}
-
-func (x *ErrorDetail) GetDetails() string {
-	if x != nil {
-		return x.Details
-	}
-	return ""
-}
-
-func (x *ErrorDetail) GetContext() map[string]string {
-	if x != nil {
-		return x.Context
-	}
-	return nil
-}
-
-func (x *ErrorDetail) GetStackTrace() []string {
-	if x != nil {
-		return x.StackTrace
-	}
-	return nil
-}
-
-func (x *ErrorDetail) GetSuggestions() []string {
-	if x != nil {
-		return x.Suggestions
-	}
-	return nil
-}
-
-func (x *ErrorDetail) GetRetryable() bool {
-	if x != nil {
-		return x.Retryable
-	}
-	return false
-}
-
-func (x *ErrorDetail) GetRetryAfterSeconds() int32 {
-	if x != nil {
-		return x.RetryAfterSeconds
-	}
-	return 0
-}
-
 // Получить ссылку для скачивания файла
 type GetInfoForDownloadRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -461,7 +139,7 @@ type GetInfoForDownloadRequest struct {
 
 func (x *GetInfoForDownloadRequest) Reset() {
 	*x = GetInfoForDownloadRequest{}
-	mi := &file_librarian_librarian_proto_msgTypes[3]
+	mi := &file_librarian_librarian_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -473,7 +151,7 @@ func (x *GetInfoForDownloadRequest) String() string {
 func (*GetInfoForDownloadRequest) ProtoMessage() {}
 
 func (x *GetInfoForDownloadRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_librarian_librarian_proto_msgTypes[3]
+	mi := &file_librarian_librarian_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -486,7 +164,7 @@ func (x *GetInfoForDownloadRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetInfoForDownloadRequest.ProtoReflect.Descriptor instead.
 func (*GetInfoForDownloadRequest) Descriptor() ([]byte, []int) {
-	return file_librarian_librarian_proto_rawDescGZIP(), []int{3}
+	return file_librarian_librarian_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *GetInfoForDownloadRequest) GetSourceId() int32 {
@@ -506,7 +184,7 @@ type GetInfoForDownloadResponse struct {
 
 func (x *GetInfoForDownloadResponse) Reset() {
 	*x = GetInfoForDownloadResponse{}
-	mi := &file_librarian_librarian_proto_msgTypes[4]
+	mi := &file_librarian_librarian_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -518,7 +196,7 @@ func (x *GetInfoForDownloadResponse) String() string {
 func (*GetInfoForDownloadResponse) ProtoMessage() {}
 
 func (x *GetInfoForDownloadResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_librarian_librarian_proto_msgTypes[4]
+	mi := &file_librarian_librarian_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -531,7 +209,7 @@ func (x *GetInfoForDownloadResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetInfoForDownloadResponse.ProtoReflect.Descriptor instead.
 func (*GetInfoForDownloadResponse) Descriptor() ([]byte, []int) {
-	return file_librarian_librarian_proto_rawDescGZIP(), []int{4}
+	return file_librarian_librarian_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *GetInfoForDownloadResponse) GetDownloadURL() string {
@@ -558,7 +236,7 @@ type FileInfo struct {
 
 func (x *FileInfo) Reset() {
 	*x = FileInfo{}
-	mi := &file_librarian_librarian_proto_msgTypes[5]
+	mi := &file_librarian_librarian_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -570,7 +248,7 @@ func (x *FileInfo) String() string {
 func (*FileInfo) ProtoMessage() {}
 
 func (x *FileInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_librarian_librarian_proto_msgTypes[5]
+	mi := &file_librarian_librarian_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -583,7 +261,7 @@ func (x *FileInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FileInfo.ProtoReflect.Descriptor instead.
 func (*FileInfo) Descriptor() ([]byte, []int) {
-	return file_librarian_librarian_proto_rawDescGZIP(), []int{5}
+	return file_librarian_librarian_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *FileInfo) GetSize() int64 {
@@ -609,7 +287,7 @@ type GetAllRegionsRequest struct {
 
 func (x *GetAllRegionsRequest) Reset() {
 	*x = GetAllRegionsRequest{}
-	mi := &file_librarian_librarian_proto_msgTypes[6]
+	mi := &file_librarian_librarian_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -621,7 +299,7 @@ func (x *GetAllRegionsRequest) String() string {
 func (*GetAllRegionsRequest) ProtoMessage() {}
 
 func (x *GetAllRegionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_librarian_librarian_proto_msgTypes[6]
+	mi := &file_librarian_librarian_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -634,7 +312,7 @@ func (x *GetAllRegionsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAllRegionsRequest.ProtoReflect.Descriptor instead.
 func (*GetAllRegionsRequest) Descriptor() ([]byte, []int) {
-	return file_librarian_librarian_proto_rawDescGZIP(), []int{6}
+	return file_librarian_librarian_proto_rawDescGZIP(), []int{4}
 }
 
 type GetAllRegionsResponse struct {
@@ -646,7 +324,7 @@ type GetAllRegionsResponse struct {
 
 func (x *GetAllRegionsResponse) Reset() {
 	*x = GetAllRegionsResponse{}
-	mi := &file_librarian_librarian_proto_msgTypes[7]
+	mi := &file_librarian_librarian_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -658,7 +336,7 @@ func (x *GetAllRegionsResponse) String() string {
 func (*GetAllRegionsResponse) ProtoMessage() {}
 
 func (x *GetAllRegionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_librarian_librarian_proto_msgTypes[7]
+	mi := &file_librarian_librarian_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -671,7 +349,7 @@ func (x *GetAllRegionsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAllRegionsResponse.ProtoReflect.Descriptor instead.
 func (*GetAllRegionsResponse) Descriptor() ([]byte, []int) {
-	return file_librarian_librarian_proto_rawDescGZIP(), []int{7}
+	return file_librarian_librarian_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *GetAllRegionsResponse) GetRegion() []*Region {
@@ -692,7 +370,7 @@ type Region struct {
 
 func (x *Region) Reset() {
 	*x = Region{}
-	mi := &file_librarian_librarian_proto_msgTypes[8]
+	mi := &file_librarian_librarian_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -704,7 +382,7 @@ func (x *Region) String() string {
 func (*Region) ProtoMessage() {}
 
 func (x *Region) ProtoReflect() protoreflect.Message {
-	mi := &file_librarian_librarian_proto_msgTypes[8]
+	mi := &file_librarian_librarian_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -717,7 +395,7 @@ func (x *Region) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Region.ProtoReflect.Descriptor instead.
 func (*Region) Descriptor() ([]byte, []int) {
-	return file_librarian_librarian_proto_rawDescGZIP(), []int{8}
+	return file_librarian_librarian_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *Region) GetId() int32 {
@@ -752,7 +430,7 @@ type SendFileRequest struct {
 
 func (x *SendFileRequest) Reset() {
 	*x = SendFileRequest{}
-	mi := &file_librarian_librarian_proto_msgTypes[9]
+	mi := &file_librarian_librarian_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -764,7 +442,7 @@ func (x *SendFileRequest) String() string {
 func (*SendFileRequest) ProtoMessage() {}
 
 func (x *SendFileRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_librarian_librarian_proto_msgTypes[9]
+	mi := &file_librarian_librarian_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -777,7 +455,7 @@ func (x *SendFileRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SendFileRequest.ProtoReflect.Descriptor instead.
 func (*SendFileRequest) Descriptor() ([]byte, []int) {
-	return file_librarian_librarian_proto_rawDescGZIP(), []int{9}
+	return file_librarian_librarian_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *SendFileRequest) GetText() string {
@@ -797,7 +475,7 @@ type SendFileResponse struct {
 
 func (x *SendFileResponse) Reset() {
 	*x = SendFileResponse{}
-	mi := &file_librarian_librarian_proto_msgTypes[10]
+	mi := &file_librarian_librarian_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -809,7 +487,7 @@ func (x *SendFileResponse) String() string {
 func (*SendFileResponse) ProtoMessage() {}
 
 func (x *SendFileResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_librarian_librarian_proto_msgTypes[10]
+	mi := &file_librarian_librarian_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -822,7 +500,7 @@ func (x *SendFileResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SendFileResponse.ProtoReflect.Descriptor instead.
 func (*SendFileResponse) Descriptor() ([]byte, []int) {
-	return file_librarian_librarian_proto_rawDescGZIP(), []int{10}
+	return file_librarian_librarian_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *SendFileResponse) GetFile() []byte {
@@ -836,51 +514,10 @@ var File_librarian_librarian_proto protoreflect.FileDescriptor
 
 const file_librarian_librarian_proto_rawDesc = "" +
 	"\n" +
-	"\x19librarian/librarian.proto\x12\tlibrarian\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1blibrarian/file_upload.proto\"\xeb\x01\n" +
-	"\x11UploadFileRequest\x126\n" +
-	"\tmeta_data\x18\x01 \x01(\v2\x17.librarian.FileMetadataH\x00R\bmetaData\x125\n" +
-	"\n" +
-	"chunk_data\x18\x02 \x01(\v2\x14.librarian.FileChunkH\x00R\tchunkData\x12\x1d\n" +
-	"\n" +
-	"request_id\x18\x04 \x01(\tR\trequestId\x12=\n" +
-	"\frequest_time\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\vrequestTimeB\t\n" +
-	"\arequest\"\xd6\x06\n" +
+	"\x19librarian/librarian.proto\x12\tlibrarian\"W\n" +
 	"\x12UploadFileResponse\x12\x17\n" +
 	"\afile_id\x18\x01 \x01(\tR\x06fileId\x12(\n" +
-	"\x10original_file_id\x18\x02 \x01(\tR\x0eoriginalFileId\x12/\n" +
-	"\x06status\x18\x03 \x01(\x0e2\x17.librarian.UploadStatusR\x06status\x12%\n" +
-	"\x0ebytes_received\x18\x04 \x01(\x03R\rbytesReceived\x12'\n" +
-	"\x0fchunks_received\x18\x05 \x01(\x05R\x0echunksReceived\x12\x1d\n" +
-	"\n" +
-	"total_size\x18\x06 \x01(\x03R\ttotalSize\x12,\n" +
-	"\x12processing_time_ms\x18\a \x01(\x03R\x10processingTimeMs\x12+\n" +
-	"\x11calculated_sha256\x18\b \x01(\tR\x10calculatedSha256\x128\n" +
-	"\x18hash_verification_passed\x18\t \x01(\bR\x16hashVerificationPassed\x12:\n" +
-	"\x19hash_verification_message\x18\n" +
-	" \x01(\tR\x17hashVerificationMessage\x12G\n" +
-	"\bmetadata\x18\v \x03(\v2+.librarian.UploadFileResponse.MetadataEntryR\bmetadata\x12F\n" +
-	"\x11upload_started_at\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\x0fuploadStartedAt\x12J\n" +
-	"\x13upload_completed_at\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\x11uploadCompletedAt\x12%\n" +
-	"\x0emissing_chunks\x18\x0e \x03(\x05R\rmissingChunks\x12\x1d\n" +
-	"\n" +
-	"can_resume\x18\x0f \x01(\bR\tcanResume\x12,\n" +
-	"\x05error\x18\x10 \x01(\v2\x16.librarian.ErrorDetailR\x05error\x1a;\n" +
-	"\rMetadataEntry\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xe1\x02\n" +
-	"\vErrorDetail\x12\x12\n" +
-	"\x04code\x18\x01 \x01(\tR\x04code\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\x12\x18\n" +
-	"\adetails\x18\x03 \x01(\tR\adetails\x12=\n" +
-	"\acontext\x18\x04 \x03(\v2#.librarian.ErrorDetail.ContextEntryR\acontext\x12\x1f\n" +
-	"\vstack_trace\x18\x05 \x03(\tR\n" +
-	"stackTrace\x12 \n" +
-	"\vsuggestions\x18\x06 \x03(\tR\vsuggestions\x12\x1c\n" +
-	"\tretryable\x18\a \x01(\bR\tretryable\x12.\n" +
-	"\x13retry_after_seconds\x18\b \x01(\x05R\x11retryAfterSeconds\x1a:\n" +
-	"\fContextEntry\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"8\n" +
+	"\x10original_file_id\x18\x02 \x01(\tR\x0eoriginalFileId\"8\n" +
 	"\x19GetInfoForDownloadRequest\x12\x1b\n" +
 	"\tsource_id\x18\x01 \x01(\x05R\bsourceId\"p\n" +
 	"\x1aGetInfoForDownloadResponse\x12 \n" +
@@ -899,19 +536,18 @@ const file_librarian_librarian_proto_rawDesc = "" +
 	"\x0fSendFileRequest\x12\x12\n" +
 	"\x04text\x18\x01 \x01(\tR\x04text\"&\n" +
 	"\x10SendFileResponse\x12\x12\n" +
-	"\x04file\x18\x01 \x01(\fR\x04file*\x9a\x01\n" +
-	"\fUploadStatus\x12\x19\n" +
-	"\x15UPLOAD_STATUS_UNKNOWN\x10\x00\x12\x1d\n" +
-	"\x19UPLOAD_STATUS_IN_PROGRESS\x10\x01\x12\x1b\n" +
-	"\x17UPLOAD_STATUS_COMPLETED\x10\x02\x12\x18\n" +
-	"\x14UPLOAD_STATUS_FAILED\x10\x03\x12\x19\n" +
-	"\x15UPLOAD_STATUS_PARTIAL\x10\x042\xd4\x02\n" +
+	"\x04file\x18\x01 \x01(\fR\x04file*\x85\x01\n" +
+	"\n" +
+	"SourceType\x12\x17\n" +
+	"\x13SOURCE_TYPE_UNKNOWN\x10\x00\x12\x14\n" +
+	"\x10SOURCE_TYPE_BOOK\x10\x01\x12\x17\n" +
+	"\x13SOURCE_TYPE_ARTICLE\x10\x02\x12\x18\n" +
+	"\x14SOURCE_TYPE_FRAGMENT\x10\x03\x12\x15\n" +
+	"\x11SOURCE_TYPE_PHOTO\x10\x042\x87\x02\n" +
 	"\tLibrarian\x12C\n" +
 	"\bSendFile\x12\x1a.librarian.SendFileRequest\x1a\x1b.librarian.SendFileResponse\x12R\n" +
 	"\rGetAllRegions\x12\x1f.librarian.GetAllRegionsRequest\x1a .librarian.GetAllRegionsResponse\x12a\n" +
-	"\x12GetInfoForDownload\x12$.librarian.GetInfoForDownloadRequest\x1a%.librarian.GetInfoForDownloadResponse\x12K\n" +
-	"\n" +
-	"UploadFile\x12\x1c.librarian.UploadFileRequest\x1a\x1d.librarian.UploadFileResponse(\x01B\x16Z\x14recon_com.lib.v1;libb\x06proto3"
+	"\x12GetInfoForDownload\x12$.librarian.GetInfoForDownloadRequest\x1a%.librarian.GetInfoForDownloadResponseB\x16Z\x14recon_com.lib.v1;libb\x06proto3"
 
 var (
 	file_librarian_librarian_proto_rawDescOnce sync.Once
@@ -926,51 +562,33 @@ func file_librarian_librarian_proto_rawDescGZIP() []byte {
 }
 
 var file_librarian_librarian_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_librarian_librarian_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
+var file_librarian_librarian_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_librarian_librarian_proto_goTypes = []any{
-	(UploadStatus)(0),                  // 0: librarian.UploadStatus
-	(*UploadFileRequest)(nil),          // 1: librarian.UploadFileRequest
-	(*UploadFileResponse)(nil),         // 2: librarian.UploadFileResponse
-	(*ErrorDetail)(nil),                // 3: librarian.ErrorDetail
-	(*GetInfoForDownloadRequest)(nil),  // 4: librarian.GetInfoForDownloadRequest
-	(*GetInfoForDownloadResponse)(nil), // 5: librarian.GetInfoForDownloadResponse
-	(*FileInfo)(nil),                   // 6: librarian.FileInfo
-	(*GetAllRegionsRequest)(nil),       // 7: librarian.GetAllRegionsRequest
-	(*GetAllRegionsResponse)(nil),      // 8: librarian.GetAllRegionsResponse
-	(*Region)(nil),                     // 9: librarian.Region
-	(*SendFileRequest)(nil),            // 10: librarian.SendFileRequest
-	(*SendFileResponse)(nil),           // 11: librarian.SendFileResponse
-	nil,                                // 12: librarian.UploadFileResponse.MetadataEntry
-	nil,                                // 13: librarian.ErrorDetail.ContextEntry
-	(*FileMetadata)(nil),               // 14: librarian.FileMetadata
-	(*FileChunk)(nil),                  // 15: librarian.FileChunk
-	(*timestamppb.Timestamp)(nil),      // 16: google.protobuf.Timestamp
+	(SourceType)(0),                    // 0: librarian.SourceType
+	(*UploadFileResponse)(nil),         // 1: librarian.UploadFileResponse
+	(*GetInfoForDownloadRequest)(nil),  // 2: librarian.GetInfoForDownloadRequest
+	(*GetInfoForDownloadResponse)(nil), // 3: librarian.GetInfoForDownloadResponse
+	(*FileInfo)(nil),                   // 4: librarian.FileInfo
+	(*GetAllRegionsRequest)(nil),       // 5: librarian.GetAllRegionsRequest
+	(*GetAllRegionsResponse)(nil),      // 6: librarian.GetAllRegionsResponse
+	(*Region)(nil),                     // 7: librarian.Region
+	(*SendFileRequest)(nil),            // 8: librarian.SendFileRequest
+	(*SendFileResponse)(nil),           // 9: librarian.SendFileResponse
 }
 var file_librarian_librarian_proto_depIdxs = []int32{
-	14, // 0: librarian.UploadFileRequest.meta_data:type_name -> librarian.FileMetadata
-	15, // 1: librarian.UploadFileRequest.chunk_data:type_name -> librarian.FileChunk
-	16, // 2: librarian.UploadFileRequest.request_time:type_name -> google.protobuf.Timestamp
-	0,  // 3: librarian.UploadFileResponse.status:type_name -> librarian.UploadStatus
-	12, // 4: librarian.UploadFileResponse.metadata:type_name -> librarian.UploadFileResponse.MetadataEntry
-	16, // 5: librarian.UploadFileResponse.upload_started_at:type_name -> google.protobuf.Timestamp
-	16, // 6: librarian.UploadFileResponse.upload_completed_at:type_name -> google.protobuf.Timestamp
-	3,  // 7: librarian.UploadFileResponse.error:type_name -> librarian.ErrorDetail
-	13, // 8: librarian.ErrorDetail.context:type_name -> librarian.ErrorDetail.ContextEntry
-	6,  // 9: librarian.GetInfoForDownloadResponse.file_info:type_name -> librarian.FileInfo
-	9,  // 10: librarian.GetAllRegionsResponse.region:type_name -> librarian.Region
-	10, // 11: librarian.Librarian.SendFile:input_type -> librarian.SendFileRequest
-	7,  // 12: librarian.Librarian.GetAllRegions:input_type -> librarian.GetAllRegionsRequest
-	4,  // 13: librarian.Librarian.GetInfoForDownload:input_type -> librarian.GetInfoForDownloadRequest
-	1,  // 14: librarian.Librarian.UploadFile:input_type -> librarian.UploadFileRequest
-	11, // 15: librarian.Librarian.SendFile:output_type -> librarian.SendFileResponse
-	8,  // 16: librarian.Librarian.GetAllRegions:output_type -> librarian.GetAllRegionsResponse
-	5,  // 17: librarian.Librarian.GetInfoForDownload:output_type -> librarian.GetInfoForDownloadResponse
-	2,  // 18: librarian.Librarian.UploadFile:output_type -> librarian.UploadFileResponse
-	15, // [15:19] is the sub-list for method output_type
-	11, // [11:15] is the sub-list for method input_type
-	11, // [11:11] is the sub-list for extension type_name
-	11, // [11:11] is the sub-list for extension extendee
-	0,  // [0:11] is the sub-list for field type_name
+	4, // 0: librarian.GetInfoForDownloadResponse.file_info:type_name -> librarian.FileInfo
+	7, // 1: librarian.GetAllRegionsResponse.region:type_name -> librarian.Region
+	8, // 2: librarian.Librarian.SendFile:input_type -> librarian.SendFileRequest
+	5, // 3: librarian.Librarian.GetAllRegions:input_type -> librarian.GetAllRegionsRequest
+	2, // 4: librarian.Librarian.GetInfoForDownload:input_type -> librarian.GetInfoForDownloadRequest
+	9, // 5: librarian.Librarian.SendFile:output_type -> librarian.SendFileResponse
+	6, // 6: librarian.Librarian.GetAllRegions:output_type -> librarian.GetAllRegionsResponse
+	3, // 7: librarian.Librarian.GetInfoForDownload:output_type -> librarian.GetInfoForDownloadResponse
+	5, // [5:8] is the sub-list for method output_type
+	2, // [2:5] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_librarian_librarian_proto_init() }
@@ -978,18 +596,13 @@ func file_librarian_librarian_proto_init() {
 	if File_librarian_librarian_proto != nil {
 		return
 	}
-	file_librarian_file_upload_proto_init()
-	file_librarian_librarian_proto_msgTypes[0].OneofWrappers = []any{
-		(*UploadFileRequest_MetaData)(nil),
-		(*UploadFileRequest_ChunkData)(nil),
-	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_librarian_librarian_proto_rawDesc), len(file_librarian_librarian_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   13,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
