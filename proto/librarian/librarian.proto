@@ -52,22 +52,14 @@ service Librarian {
 //  string time_periods = 6;
 //}
 
-
-message UploadFileResponse { // UploadResponse - ответ на загрузку файла
-  string file_id = 1;               // ID загруженного файла (может отличаться от отправленного)
-  string original_file_id = 2;      // Оригинальный ID из запроса
-
-
-}
-
-// Тип источника
-enum SourceType {
-  SOURCE_TYPE_UNKNOWN = 0;
-  SOURCE_TYPE_BOOK = 1;
-  SOURCE_TYPE_ARTICLE = 2;
-  SOURCE_TYPE_FRAGMENT = 3;
-  SOURCE_TYPE_PHOTO = 4;
-}
+//// Тип источника
+//enum SourceType {
+//  SOURCE_TYPE_UNKNOWN = 0;
+//  SOURCE_TYPE_BOOK = 1;
+//  SOURCE_TYPE_ARTICLE = 2;
+//  SOURCE_TYPE_FRAGMENT = 3;
+//  SOURCE_TYPE_PHOTO = 4;
+//}
 
 // Получить ссылку для скачивания файла
 message GetInfoForDownloadRequest{
