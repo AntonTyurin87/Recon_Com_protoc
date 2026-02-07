@@ -5,11 +5,8 @@ package librarian;
 option go_package = "recon_com.lib.v1;lib";
 
 service Librarian {
-  // Отправка файла в ответ на запрос
-  rpc SendFile(SendFileRequest) returns (SendFileResponse);
-
   // Получить список регионов
-  rpc GetAllRegions(GetAllRegionsRequest) returns (GetAllRegionsResponse);
+  rpc GetAllRegions(GetAllRegionsRequest) returns (GetAllRegionsResponse); //TODO починить
 
   // Получить ссылку для скачивания файла
   rpc GetInfoForDownload(GetInfoForDownloadRequest) returns (GetInfoForDownloadResponse);
@@ -103,15 +100,4 @@ message Region {
   int32 id = 1;
   string name_ru = 2;
   string description = 3;
-}
-
-// Отправка файла в ответ на запрос
-message SendFileRequest {
-  // Текст сообщения
-  string text = 1;
-}
-
-message SendFileResponse {
-  //файл
-  bytes file = 1;
 }

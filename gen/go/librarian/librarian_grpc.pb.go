@@ -19,7 +19,6 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Librarian_SendFile_FullMethodName                    = "/librarian.Librarian/SendFile"
 	Librarian_GetAllRegions_FullMethodName               = "/librarian.Librarian/GetAllRegions"
 	Librarian_GetInfoForDownload_FullMethodName          = "/librarian.Librarian/GetInfoForDownload"
 	Librarian_UploadSourceDataForDownload_FullMethodName = "/librarian.Librarian/UploadSourceDataForDownload"
@@ -29,8 +28,6 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LibrarianClient interface {
-	// Отправка файла в ответ на запрос
-	SendFile(ctx context.Context, in *SendFileRequest, opts ...grpc.CallOption) (*SendFileResponse, error)
 	// Получить список регионов
 	GetAllRegions(ctx context.Context, in *GetAllRegionsRequest, opts ...grpc.CallOption) (*GetAllRegionsResponse, error)
 	// Получить ссылку для скачивания файла
@@ -45,16 +42,6 @@ type librarianClient struct {
 
 func NewLibrarianClient(cc grpc.ClientConnInterface) LibrarianClient {
 	return &librarianClient{cc}
-}
-
-func (c *librarianClient) SendFile(ctx context.Context, in *SendFileRequest, opts ...grpc.CallOption) (*SendFileResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SendFileResponse)
-	err := c.cc.Invoke(ctx, Librarian_SendFile_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *librarianClient) GetAllRegions(ctx context.Context, in *GetAllRegionsRequest, opts ...grpc.CallOption) (*GetAllRegionsResponse, error) {
@@ -91,8 +78,6 @@ func (c *librarianClient) UploadSourceDataForDownload(ctx context.Context, in *U
 // All implementations must embed UnimplementedLibrarianServer
 // for forward compatibility.
 type LibrarianServer interface {
-	// Отправка файла в ответ на запрос
-	SendFile(context.Context, *SendFileRequest) (*SendFileResponse, error)
 	// Получить список регионов
 	GetAllRegions(context.Context, *GetAllRegionsRequest) (*GetAllRegionsResponse, error)
 	// Получить ссылку для скачивания файла
@@ -109,9 +94,6 @@ type LibrarianServer interface {
 // pointer dereference when methods are called.
 type UnimplementedLibrarianServer struct{}
 
-func (UnimplementedLibrarianServer) SendFile(context.Context, *SendFileRequest) (*SendFileResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SendFile not implemented")
-}
 func (UnimplementedLibrarianServer) GetAllRegions(context.Context, *GetAllRegionsRequest) (*GetAllRegionsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllRegions not implemented")
 }
@@ -140,24 +122,6 @@ func RegisterLibrarianServer(s grpc.ServiceRegistrar, srv LibrarianServer) {
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&Librarian_ServiceDesc, srv)
-}
-
-func _Librarian_SendFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SendFileRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LibrarianServer).SendFile(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Librarian_SendFile_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LibrarianServer).SendFile(ctx, req.(*SendFileRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _Librarian_GetAllRegions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -221,10 +185,6 @@ var Librarian_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "librarian.Librarian",
 	HandlerType: (*LibrarianServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "SendFile",
-			Handler:    _Librarian_SendFile_Handler,
-		},
 		{
 			MethodName: "GetAllRegions",
 			Handler:    _Librarian_GetAllRegions_Handler,
