@@ -225,7 +225,7 @@ func (x *UploadSourceDataForDownloadResponse) GetIsSaved() bool {
 // Получить ссылку для скачивания файла
 type GetInfoForDownloadRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	SourceId      int32                  `protobuf:"varint,1,opt,name=source_id,json=sourceId,proto3" json:"source_id,omitempty"`
+	SourceId      int64                  `protobuf:"varint,1,opt,name=source_id,json=sourceId,proto3" json:"source_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -260,7 +260,7 @@ func (*GetInfoForDownloadRequest) Descriptor() ([]byte, []int) {
 	return file_librarian_librarian_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *GetInfoForDownloadRequest) GetSourceId() int32 {
+func (x *GetInfoForDownloadRequest) GetSourceId() int64 {
 	if x != nil {
 		return x.SourceId
 	}
@@ -454,7 +454,7 @@ func (x *GetAllRegionsResponse) GetRegion() []*Region {
 
 type Region struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	NameRu        string                 `protobuf:"bytes,2,opt,name=name_ru,json=nameRu,proto3" json:"name_ru,omitempty"`
 	Description   string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -491,7 +491,7 @@ func (*Region) Descriptor() ([]byte, []int) {
 	return file_librarian_librarian_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *Region) GetId() int32 {
+func (x *Region) GetId() int64 {
 	if x != nil {
 		return x.Id
 	}
@@ -530,7 +530,7 @@ const file_librarian_librarian_proto_rawDesc = "" +
 	"#UploadSourceDataForDownloadResponse\x12\x19\n" +
 	"\bis_saved\x18\x01 \x01(\bR\aisSaved\"8\n" +
 	"\x19GetInfoForDownloadRequest\x12\x1b\n" +
-	"\tsource_id\x18\x01 \x01(\x05R\bsourceId\"p\n" +
+	"\tsource_id\x18\x01 \x01(\x03R\bsourceId\"p\n" +
 	"\x1aGetInfoForDownloadResponse\x12 \n" +
 	"\vdownloadURL\x18\x01 \x01(\tR\vdownloadURL\x120\n" +
 	"\tfile_info\x18\x02 \x01(\v2\x13.librarian.FileInfoR\bfileInfo\";\n" +
@@ -541,7 +541,7 @@ const file_librarian_librarian_proto_rawDesc = "" +
 	"\x15GetAllRegionsResponse\x12)\n" +
 	"\x06region\x18\x01 \x03(\v2\x11.librarian.RegionR\x06region\"S\n" +
 	"\x06Region\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x17\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x17\n" +
 	"\aname_ru\x18\x02 \x01(\tR\x06nameRu\x12 \n" +
 	"\vdescription\x18\x03 \x01(\tR\vdescription*\x85\x01\n" +
 	"\n" +

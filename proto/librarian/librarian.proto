@@ -76,7 +76,7 @@ enum SourceType {
 
 // Получить ссылку для скачивания файла
 message GetInfoForDownloadRequest{
-  int32 source_id = 1;
+  int64 source_id = 1;
 }
 
 message GetInfoForDownloadResponse{
@@ -97,7 +97,7 @@ message GetAllRegionsResponse{
 }
 
 message Region {
-  int32 id = 1;
+  int64 id = 1;
   string name_ru = 2;
   string description = 3;
 }
