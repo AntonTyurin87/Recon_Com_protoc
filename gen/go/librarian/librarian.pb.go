@@ -88,6 +88,7 @@ type UploadSourceDataForDownloadRequest struct {
 	Year          int64                  `protobuf:"varint,6,opt,name=year,proto3" json:"year,omitempty"`
 	Description   string                 `protobuf:"bytes,7,opt,name=description,proto3" json:"description,omitempty"`
 	DownloadUrl   string                 `protobuf:"bytes,8,opt,name=download_url,json=downloadUrl,proto3" json:"download_url,omitempty"`
+	CreatedAt     string                 `protobuf:"bytes,9,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -174,6 +175,13 @@ func (x *UploadSourceDataForDownloadRequest) GetDescription() string {
 func (x *UploadSourceDataForDownloadRequest) GetDownloadUrl() string {
 	if x != nil {
 		return x.DownloadUrl
+	}
+	return ""
+}
+
+func (x *UploadSourceDataForDownloadRequest) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
 	}
 	return ""
 }
@@ -540,7 +548,7 @@ var File_librarian_librarian_proto protoreflect.FileDescriptor
 
 const file_librarian_librarian_proto_rawDesc = "" +
 	"\n" +
-	"\x19librarian/librarian.proto\x12\tlibrarian\"\x9e\x02\n" +
+	"\x19librarian/librarian.proto\x12\tlibrarian\"\xbd\x02\n" +
 	"\"UploadSourceDataForDownloadRequest\x12\x16\n" +
 	"\x06userID\x18\x01 \x01(\x03R\x06userID\x126\n" +
 	"\vsource_type\x18\x02 \x01(\x0e2\x15.librarian.SourceTypeR\n" +
@@ -550,7 +558,9 @@ const file_librarian_librarian_proto_rawDesc = "" +
 	"\tauthor_ru\x18\x05 \x01(\tR\bauthorRu\x12\x12\n" +
 	"\x04year\x18\x06 \x01(\x03R\x04year\x12 \n" +
 	"\vdescription\x18\a \x01(\tR\vdescription\x12!\n" +
-	"\fdownload_url\x18\b \x01(\tR\vdownloadUrl\"P\n" +
+	"\fdownload_url\x18\b \x01(\tR\vdownloadUrl\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\t \x01(\tR\tcreatedAt\"P\n" +
 	"#UploadSourceDataForDownloadResponse\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x19\n" +
 	"\bis_saved\x18\x02 \x01(\bR\aisSaved\"=\n" +

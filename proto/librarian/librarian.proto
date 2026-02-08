@@ -30,6 +30,7 @@ message UploadSourceDataForDownloadRequest {
   int64 year = 6;
   string description = 7;
   string download_url = 8;
+  string created_at = 9;
 }
 
 message UploadSourceDataForDownloadResponse {
