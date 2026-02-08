@@ -223,27 +223,27 @@ func (x *UploadSourceDataForDownloadResponse) GetIsSaved() bool {
 }
 
 // Получить ссылку для скачивания файла
-type GetInfoForDownloadRequest struct {
+type GetURLForDownloadSourceRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SourceId      int64                  `protobuf:"varint,1,opt,name=source_id,json=sourceId,proto3" json:"source_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetInfoForDownloadRequest) Reset() {
-	*x = GetInfoForDownloadRequest{}
+func (x *GetURLForDownloadSourceRequest) Reset() {
+	*x = GetURLForDownloadSourceRequest{}
 	mi := &file_librarian_librarian_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetInfoForDownloadRequest) String() string {
+func (x *GetURLForDownloadSourceRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetInfoForDownloadRequest) ProtoMessage() {}
+func (*GetURLForDownloadSourceRequest) ProtoMessage() {}
 
-func (x *GetInfoForDownloadRequest) ProtoReflect() protoreflect.Message {
+func (x *GetURLForDownloadSourceRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_librarian_librarian_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -255,40 +255,40 @@ func (x *GetInfoForDownloadRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetInfoForDownloadRequest.ProtoReflect.Descriptor instead.
-func (*GetInfoForDownloadRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetURLForDownloadSourceRequest.ProtoReflect.Descriptor instead.
+func (*GetURLForDownloadSourceRequest) Descriptor() ([]byte, []int) {
 	return file_librarian_librarian_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *GetInfoForDownloadRequest) GetSourceId() int64 {
+func (x *GetURLForDownloadSourceRequest) GetSourceId() int64 {
 	if x != nil {
 		return x.SourceId
 	}
 	return 0
 }
 
-type GetInfoForDownloadResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DownloadURL   string                 `protobuf:"bytes,1,opt,name=downloadURL,proto3" json:"downloadURL,omitempty"`
-	FileInfo      *FileInfo              `protobuf:"bytes,2,opt,name=file_info,json=fileInfo,proto3" json:"file_info,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+type GetURLForDownloadSourceResponse struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	URLForDownload string                 `protobuf:"bytes,1,opt,name=URLForDownload,proto3" json:"URLForDownload,omitempty"`
+	FileInfo       *FileInfo              `protobuf:"bytes,2,opt,name=file_info,json=fileInfo,proto3" json:"file_info,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
-func (x *GetInfoForDownloadResponse) Reset() {
-	*x = GetInfoForDownloadResponse{}
+func (x *GetURLForDownloadSourceResponse) Reset() {
+	*x = GetURLForDownloadSourceResponse{}
 	mi := &file_librarian_librarian_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetInfoForDownloadResponse) String() string {
+func (x *GetURLForDownloadSourceResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetInfoForDownloadResponse) ProtoMessage() {}
+func (*GetURLForDownloadSourceResponse) ProtoMessage() {}
 
-func (x *GetInfoForDownloadResponse) ProtoReflect() protoreflect.Message {
+func (x *GetURLForDownloadSourceResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_librarian_librarian_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -300,19 +300,19 @@ func (x *GetInfoForDownloadResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetInfoForDownloadResponse.ProtoReflect.Descriptor instead.
-func (*GetInfoForDownloadResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetURLForDownloadSourceResponse.ProtoReflect.Descriptor instead.
+func (*GetURLForDownloadSourceResponse) Descriptor() ([]byte, []int) {
 	return file_librarian_librarian_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *GetInfoForDownloadResponse) GetDownloadURL() string {
+func (x *GetURLForDownloadSourceResponse) GetURLForDownload() string {
 	if x != nil {
-		return x.DownloadURL
+		return x.URLForDownload
 	}
 	return ""
 }
 
-func (x *GetInfoForDownloadResponse) GetFileInfo() *FileInfo {
+func (x *GetURLForDownloadSourceResponse) GetFileInfo() *FileInfo {
 	if x != nil {
 		return x.FileInfo
 	}
@@ -323,6 +323,8 @@ type FileInfo struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Size          int64                  `protobuf:"varint,1,opt,name=size,proto3" json:"size,omitempty"`
 	MimeType      string                 `protobuf:"bytes,2,opt,name=mime_type,json=mimeType,proto3" json:"mime_type,omitempty"`
+	FileName      string                 `protobuf:"bytes,3,opt,name=file_name,json=fileName,proto3" json:"file_name,omitempty"`
+	FileType      string                 `protobuf:"bytes,4,opt,name=file_type,json=fileType,proto3" json:"file_type,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -367,6 +369,20 @@ func (x *FileInfo) GetSize() int64 {
 func (x *FileInfo) GetMimeType() string {
 	if x != nil {
 		return x.MimeType
+	}
+	return ""
+}
+
+func (x *FileInfo) GetFileName() string {
+	if x != nil {
+		return x.FileName
+	}
+	return ""
+}
+
+func (x *FileInfo) GetFileType() string {
+	if x != nil {
+		return x.FileType
 	}
 	return ""
 }
@@ -528,15 +544,17 @@ const file_librarian_librarian_proto_rawDesc = "" +
 	"\vdescription\x18\a \x01(\tR\vdescription\x12!\n" +
 	"\fdownload_url\x18\b \x01(\tR\vdownloadUrl\"@\n" +
 	"#UploadSourceDataForDownloadResponse\x12\x19\n" +
-	"\bis_saved\x18\x01 \x01(\bR\aisSaved\"8\n" +
-	"\x19GetInfoForDownloadRequest\x12\x1b\n" +
-	"\tsource_id\x18\x01 \x01(\x03R\bsourceId\"p\n" +
-	"\x1aGetInfoForDownloadResponse\x12 \n" +
-	"\vdownloadURL\x18\x01 \x01(\tR\vdownloadURL\x120\n" +
-	"\tfile_info\x18\x02 \x01(\v2\x13.librarian.FileInfoR\bfileInfo\";\n" +
+	"\bis_saved\x18\x01 \x01(\bR\aisSaved\"=\n" +
+	"\x1eGetURLForDownloadSourceRequest\x12\x1b\n" +
+	"\tsource_id\x18\x01 \x01(\x03R\bsourceId\"{\n" +
+	"\x1fGetURLForDownloadSourceResponse\x12&\n" +
+	"\x0eURLForDownload\x18\x01 \x01(\tR\x0eURLForDownload\x120\n" +
+	"\tfile_info\x18\x02 \x01(\v2\x13.librarian.FileInfoR\bfileInfo\"u\n" +
 	"\bFileInfo\x12\x12\n" +
 	"\x04size\x18\x01 \x01(\x03R\x04size\x12\x1b\n" +
-	"\tmime_type\x18\x02 \x01(\tR\bmimeType\"\x16\n" +
+	"\tmime_type\x18\x02 \x01(\tR\bmimeType\x12\x1b\n" +
+	"\tfile_name\x18\x03 \x01(\tR\bfileName\x12\x1b\n" +
+	"\tfile_type\x18\x04 \x01(\tR\bfileType\"\x16\n" +
 	"\x14GetAllRegionsRequest\"B\n" +
 	"\x15GetAllRegionsResponse\x12)\n" +
 	"\x06region\x18\x01 \x03(\v2\x11.librarian.RegionR\x06region\"S\n" +
@@ -550,10 +568,10 @@ const file_librarian_librarian_proto_rawDesc = "" +
 	"\x10SOURCE_TYPE_BOOK\x10\x01\x12\x17\n" +
 	"\x13SOURCE_TYPE_ARTICLE\x10\x02\x12\x18\n" +
 	"\x14SOURCE_TYPE_FRAGMENT\x10\x03\x12\x15\n" +
-	"\x11SOURCE_TYPE_PHOTO\x10\x042\xc0\x02\n" +
+	"\x11SOURCE_TYPE_PHOTO\x10\x042\xcf\x02\n" +
 	"\tLibrarian\x12R\n" +
-	"\rGetAllRegions\x12\x1f.librarian.GetAllRegionsRequest\x1a .librarian.GetAllRegionsResponse\x12a\n" +
-	"\x12GetInfoForDownload\x12$.librarian.GetInfoForDownloadRequest\x1a%.librarian.GetInfoForDownloadResponse\x12|\n" +
+	"\rGetAllRegions\x12\x1f.librarian.GetAllRegionsRequest\x1a .librarian.GetAllRegionsResponse\x12p\n" +
+	"\x17GetURLForDownloadSource\x12).librarian.GetURLForDownloadSourceRequest\x1a*.librarian.GetURLForDownloadSourceResponse\x12|\n" +
 	"\x1bUploadSourceDataForDownload\x12-.librarian.UploadSourceDataForDownloadRequest\x1a..librarian.UploadSourceDataForDownloadResponseB\x16Z\x14recon_com.lib.v1;libb\x06proto3"
 
 var (
@@ -574,8 +592,8 @@ var file_librarian_librarian_proto_goTypes = []any{
 	(SourceType)(0), // 0: librarian.SourceType
 	(*UploadSourceDataForDownloadRequest)(nil),  // 1: librarian.UploadSourceDataForDownloadRequest
 	(*UploadSourceDataForDownloadResponse)(nil), // 2: librarian.UploadSourceDataForDownloadResponse
-	(*GetInfoForDownloadRequest)(nil),           // 3: librarian.GetInfoForDownloadRequest
-	(*GetInfoForDownloadResponse)(nil),          // 4: librarian.GetInfoForDownloadResponse
+	(*GetURLForDownloadSourceRequest)(nil),      // 3: librarian.GetURLForDownloadSourceRequest
+	(*GetURLForDownloadSourceResponse)(nil),     // 4: librarian.GetURLForDownloadSourceResponse
 	(*FileInfo)(nil),                            // 5: librarian.FileInfo
 	(*GetAllRegionsRequest)(nil),                // 6: librarian.GetAllRegionsRequest
 	(*GetAllRegionsResponse)(nil),               // 7: librarian.GetAllRegionsResponse
@@ -583,13 +601,13 @@ var file_librarian_librarian_proto_goTypes = []any{
 }
 var file_librarian_librarian_proto_depIdxs = []int32{
 	0, // 0: librarian.UploadSourceDataForDownloadRequest.source_type:type_name -> librarian.SourceType
-	5, // 1: librarian.GetInfoForDownloadResponse.file_info:type_name -> librarian.FileInfo
+	5, // 1: librarian.GetURLForDownloadSourceResponse.file_info:type_name -> librarian.FileInfo
 	8, // 2: librarian.GetAllRegionsResponse.region:type_name -> librarian.Region
 	6, // 3: librarian.Librarian.GetAllRegions:input_type -> librarian.GetAllRegionsRequest
-	3, // 4: librarian.Librarian.GetInfoForDownload:input_type -> librarian.GetInfoForDownloadRequest
+	3, // 4: librarian.Librarian.GetURLForDownloadSource:input_type -> librarian.GetURLForDownloadSourceRequest
 	1, // 5: librarian.Librarian.UploadSourceDataForDownload:input_type -> librarian.UploadSourceDataForDownloadRequest
 	7, // 6: librarian.Librarian.GetAllRegions:output_type -> librarian.GetAllRegionsResponse
-	4, // 7: librarian.Librarian.GetInfoForDownload:output_type -> librarian.GetInfoForDownloadResponse
+	4, // 7: librarian.Librarian.GetURLForDownloadSource:output_type -> librarian.GetURLForDownloadSourceResponse
 	2, // 8: librarian.Librarian.UploadSourceDataForDownload:output_type -> librarian.UploadSourceDataForDownloadResponse
 	6, // [6:9] is the sub-list for method output_type
 	3, // [3:6] is the sub-list for method input_type

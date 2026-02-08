@@ -20,7 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	Librarian_GetAllRegions_FullMethodName               = "/librarian.Librarian/GetAllRegions"
-	Librarian_GetInfoForDownload_FullMethodName          = "/librarian.Librarian/GetInfoForDownload"
+	Librarian_GetURLForDownloadSource_FullMethodName     = "/librarian.Librarian/GetURLForDownloadSource"
 	Librarian_UploadSourceDataForDownload_FullMethodName = "/librarian.Librarian/UploadSourceDataForDownload"
 )
 
@@ -31,7 +31,7 @@ type LibrarianClient interface {
 	// Получить список регионов
 	GetAllRegions(ctx context.Context, in *GetAllRegionsRequest, opts ...grpc.CallOption) (*GetAllRegionsResponse, error)
 	// Получить ссылку для скачивания файла
-	GetInfoForDownload(ctx context.Context, in *GetInfoForDownloadRequest, opts ...grpc.CallOption) (*GetInfoForDownloadResponse, error)
+	GetURLForDownloadSource(ctx context.Context, in *GetURLForDownloadSourceRequest, opts ...grpc.CallOption) (*GetURLForDownloadSourceResponse, error)
 	// Передать информацию для сохранения источника
 	UploadSourceDataForDownload(ctx context.Context, in *UploadSourceDataForDownloadRequest, opts ...grpc.CallOption) (*UploadSourceDataForDownloadResponse, error)
 }
@@ -54,10 +54,10 @@ func (c *librarianClient) GetAllRegions(ctx context.Context, in *GetAllRegionsRe
 	return out, nil
 }
 
-func (c *librarianClient) GetInfoForDownload(ctx context.Context, in *GetInfoForDownloadRequest, opts ...grpc.CallOption) (*GetInfoForDownloadResponse, error) {
+func (c *librarianClient) GetURLForDownloadSource(ctx context.Context, in *GetURLForDownloadSourceRequest, opts ...grpc.CallOption) (*GetURLForDownloadSourceResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetInfoForDownloadResponse)
-	err := c.cc.Invoke(ctx, Librarian_GetInfoForDownload_FullMethodName, in, out, cOpts...)
+	out := new(GetURLForDownloadSourceResponse)
+	err := c.cc.Invoke(ctx, Librarian_GetURLForDownloadSource_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -81,7 +81,7 @@ type LibrarianServer interface {
 	// Получить список регионов
 	GetAllRegions(context.Context, *GetAllRegionsRequest) (*GetAllRegionsResponse, error)
 	// Получить ссылку для скачивания файла
-	GetInfoForDownload(context.Context, *GetInfoForDownloadRequest) (*GetInfoForDownloadResponse, error)
+	GetURLForDownloadSource(context.Context, *GetURLForDownloadSourceRequest) (*GetURLForDownloadSourceResponse, error)
 	// Передать информацию для сохранения источника
 	UploadSourceDataForDownload(context.Context, *UploadSourceDataForDownloadRequest) (*UploadSourceDataForDownloadResponse, error)
 	mustEmbedUnimplementedLibrarianServer()
@@ -97,8 +97,8 @@ type UnimplementedLibrarianServer struct{}
 func (UnimplementedLibrarianServer) GetAllRegions(context.Context, *GetAllRegionsRequest) (*GetAllRegionsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllRegions not implemented")
 }
-func (UnimplementedLibrarianServer) GetInfoForDownload(context.Context, *GetInfoForDownloadRequest) (*GetInfoForDownloadResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetInfoForDownload not implemented")
+func (UnimplementedLibrarianServer) GetURLForDownloadSource(context.Context, *GetURLForDownloadSourceRequest) (*GetURLForDownloadSourceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetURLForDownloadSource not implemented")
 }
 func (UnimplementedLibrarianServer) UploadSourceDataForDownload(context.Context, *UploadSourceDataForDownloadRequest) (*UploadSourceDataForDownloadResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UploadSourceDataForDownload not implemented")
@@ -142,20 +142,20 @@ func _Librarian_GetAllRegions_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Librarian_GetInfoForDownload_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetInfoForDownloadRequest)
+func _Librarian_GetURLForDownloadSource_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetURLForDownloadSourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LibrarianServer).GetInfoForDownload(ctx, in)
+		return srv.(LibrarianServer).GetURLForDownloadSource(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Librarian_GetInfoForDownload_FullMethodName,
+		FullMethod: Librarian_GetURLForDownloadSource_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LibrarianServer).GetInfoForDownload(ctx, req.(*GetInfoForDownloadRequest))
+		return srv.(LibrarianServer).GetURLForDownloadSource(ctx, req.(*GetURLForDownloadSourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -190,8 +190,8 @@ var Librarian_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Librarian_GetAllRegions_Handler,
 		},
 		{
-			MethodName: "GetInfoForDownload",
-			Handler:    _Librarian_GetInfoForDownload_Handler,
+			MethodName: "GetURLForDownloadSource",
+			Handler:    _Librarian_GetURLForDownloadSource_Handler,
 		},
 		{
 			MethodName: "UploadSourceDataForDownload",

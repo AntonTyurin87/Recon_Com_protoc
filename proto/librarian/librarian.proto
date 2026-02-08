@@ -9,7 +9,7 @@ service Librarian {
   rpc GetAllRegions(GetAllRegionsRequest) returns (GetAllRegionsResponse); //TODO починить
 
   // Получить ссылку для скачивания файла
-  rpc GetInfoForDownload(GetInfoForDownloadRequest) returns (GetInfoForDownloadResponse);
+  rpc GetURLForDownloadSource(GetURLForDownloadSourceRequest) returns (GetURLForDownloadSourceResponse);
 
   // Получить список источников по фильтру
   // rpc GetSourcesByFilter(GetSourcesByFilterRequest) returns (GetSourcesByFilterResponse) //TODO отложено
@@ -75,18 +75,20 @@ enum SourceType {
 }
 
 // Получить ссылку для скачивания файла
-message GetInfoForDownloadRequest{
+message GetURLForDownloadSourceRequest{
   int64 source_id = 1;
 }
 
-message GetInfoForDownloadResponse{
-  string downloadURL = 1;
+message GetURLForDownloadSourceResponse{
+  string URLForDownload = 1;
   FileInfo file_info = 2;
 }
 
 message FileInfo{
   int64 size = 1;
   string mime_type = 2;
+  string file_name = 3;
+  string file_type = 4;
 }
 
 // Получить список регионов
