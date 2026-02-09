@@ -338,6 +338,8 @@ func (x *GetURLForDownloadSourceResponse) GetFileInfo() *FileInfo {
 type FileInfo struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Size          int64                  `protobuf:"varint,1,opt,name=size,proto3" json:"size,omitempty"`
+	FileName      string                 `protobuf:"bytes,2,opt,name=file_name,json=fileName,proto3" json:"file_name,omitempty"`
+	FileType      string                 `protobuf:"bytes,3,opt,name=file_type,json=fileType,proto3" json:"file_type,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -377,6 +379,20 @@ func (x *FileInfo) GetSize() int64 {
 		return x.Size
 	}
 	return 0
+}
+
+func (x *FileInfo) GetFileName() string {
+	if x != nil {
+		return x.FileName
+	}
+	return ""
+}
+
+func (x *FileInfo) GetFileType() string {
+	if x != nil {
+		return x.FileType
+	}
+	return ""
 }
 
 // Получить список регионов
@@ -544,9 +560,11 @@ const file_librarian_librarian_proto_rawDesc = "" +
 	"\tsource_id\x18\x01 \x01(\x03R\bsourceId\"{\n" +
 	"\x1fGetURLForDownloadSourceResponse\x12&\n" +
 	"\x0eURLForDownload\x18\x01 \x01(\tR\x0eURLForDownload\x120\n" +
-	"\tfile_info\x18\x02 \x01(\v2\x13.librarian.FileInfoR\bfileInfo\"\x1e\n" +
+	"\tfile_info\x18\x02 \x01(\v2\x13.librarian.FileInfoR\bfileInfo\"X\n" +
 	"\bFileInfo\x12\x12\n" +
-	"\x04size\x18\x01 \x01(\x03R\x04size\"\x16\n" +
+	"\x04size\x18\x01 \x01(\x03R\x04size\x12\x1b\n" +
+	"\tfile_name\x18\x02 \x01(\tR\bfileName\x12\x1b\n" +
+	"\tfile_type\x18\x03 \x01(\tR\bfileType\"\x16\n" +
 	"\x14GetAllRegionsRequest\"B\n" +
 	"\x15GetAllRegionsResponse\x12)\n" +
 	"\x06region\x18\x01 \x03(\v2\x11.librarian.RegionR\x06region\"S\n" +
