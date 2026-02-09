@@ -88,9 +88,6 @@ message GetURLForDownloadSourceResponse{
 
 message FileInfo{
   int64 size = 1;
-  string mime_type = 2;
-  string file_name = 3;
-  string file_type = 4;
 }
 
 // Получить список регионов
